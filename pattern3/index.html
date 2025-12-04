@@ -131,14 +131,13 @@
         </div>
         
         <div class="footer">
-            <p>最后更新: <span id="updateTime">2025-12-04 23:00:15</span></p>
+            <p>最后更新: <span id="updateTime">2025-12-05 00:02:55</span></p>
             <p>© 大模型交易比赛 | 自动更新系统</p>
         </div>
     </div>
 
     <script src="./assets_data.js"></script>
     <script>
-        // 设置当前页面导航为活动状态
         document.addEventListener('DOMContentLoaded', function() {
             const currentPattern = "模式3-数据加新闻";
             document.querySelectorAll('.nav a').forEach(link => {
@@ -147,17 +146,14 @@
                 }
             });
             
-            // 更新显示时间
             document.getElementById('updateTime').textContent = new Date().toLocaleString('zh-CN');
             
-            // 检查数据
             if (typeof modelAssetsData === 'undefined') {
                 document.getElementById('chart').innerHTML = 
                     '<div style="text-align:center; padding:50px;"><h3>数据加载失败</h3><p>请检查数据文件</p></div>';
                 return;
             }
             
-            // 准备图表数据
             const traces = [];
             const colors = {
                 'deepseek-v3': '#1f77b4',
@@ -167,7 +163,6 @@
                 'llama-3.1-405b': '#d62728'
             };
             
-            // 准备统计数据
             let statsHtml = '';
             
             for (const modelName in modelAssetsData) {
@@ -177,14 +172,12 @@
                 const x = data.map(item => item[0]);
                 const y = data.map(item => item[1]);
                 
-                // 计算统计信息
                 const firstValue = y[0];
                 const lastValue = y[y.length - 1];
                 const changePercent = ((lastValue - firstValue) / firstValue * 100).toFixed(2);
                 const changeClass = changePercent >= 0 ? 'positive' : 'negative';
                 const changeSign = changePercent >= 0 ? '+' : '';
                 
-                // 添加到统计卡片
                 statsHtml += `
                     <div class="stat-card">
                         <h3>${modelName}</h3>
@@ -196,7 +189,6 @@
                     </div>
                 `;
                 
-                // 添加到图表
                 traces.push({
                     x: x,
                     y: y,
@@ -208,12 +200,10 @@
                 });
             }
             
-            // 更新统计容器
             if (statsHtml) {
                 document.getElementById('statsContainer').innerHTML = statsHtml;
             }
             
-            // 绘制图表
             if (traces.length > 0) {
                 const layout = {
                     title: '模式3-数据加新闻 - 资产走势',
@@ -239,7 +229,6 @@
                 
                 Plotly.newPlot('chart', traces, layout);
                 
-                // 响应窗口大小变化
                 window.addEventListener('resize', function() {
                     Plotly.Plots.resize(document.getElementById('chart'));
                 });
