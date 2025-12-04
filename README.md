@@ -1,1 +1,1 @@
-# model-asset-chart
+# model-assets-chart
