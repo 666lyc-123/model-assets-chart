@@ -1,4 +1,4 @@
-// 模式1-纯数据 数据 - 自动生成于 2025-12-06 17:04:22
+// Pattern1-Pure Data Data - Auto-generated at 2025-12-06 17:17:51
 var modelAssetsData = {
   "deepseek-v3": [
     [
