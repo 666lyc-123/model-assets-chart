@@ -1,4 +1,4 @@
-// Pattern2-Data+Technical Data - Auto-generated at 2025-12-09 18:21:09
+// Pattern2-Data+Technical Data - Auto-generated at 2025-12-09 21:57:16
 var modelAssetsData = {
   "deepseek-v3": [
     [
@@ -24,6 +24,10 @@ var modelAssetsData = {
     [
       "2025-12-08",
       1006712.8200000001
+    ],
+    [
+      "2025-12-09",
+      1001600.2440000001
     ]
   ],
   "qwen-72b": [
@@ -102,6 +106,10 @@ var modelAssetsData = {
     [
       "2025-12-08",
       1001978.68
+    ],
+    [
+      "2025-12-09",
+      996632.0
     ]
   ],
   "llama-3.1-405b": [
