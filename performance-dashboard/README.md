@@ -36,13 +36,13 @@ performance-dashboard/
 - **Return Volatility (%)**: Standard deviation of returns
 
 ## Update Information
-- **Last Update**: 2025-12-14 23:41:47
+- **Last Update**: 2025-12-14 23:48:58
 - **Update Frequency**: Daily
 - **Models**: DeepSeek, Gemini, GPT, LLaMA, Qwen
 - **Patterns**: Pure Data, Data+Technical, Data+News
 
 ## Access
-Dashboard URL: https://[YOUR_USERNAME].github.io/model-assets-chart/performance-dashboard/
+Dashboard URL: https://666lyc-123.github.io/model-assets-chart/performance-dashboard/
 
 ## Technical Details
 - Built with Python, Pandas, and Plotly
