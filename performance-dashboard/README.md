@@ -3,7 +3,7 @@
 ## Overview
 This dashboard provides daily automated analysis of trading performance for five large language models across three trading strategies.
 
-## Folder Structure 
+## Folder Structure
 performance-dashboard/
 ├── index.html # Main dashboard page
 ├── assets/
@@ -21,6 +21,7 @@ performance-dashboard/
 │ ├── daily/ # Daily reports (Excel)
 │ └── weekly/ # Weekly summaries
 └── archive/ # Archived historical data
+
 ## Files
 1. **index.html** - Main dashboard with interactive Plotly table
 2. **assets/css/dashboard.css** - Custom styling (white background, dark text)
@@ -36,9 +37,9 @@ performance-dashboard/
 - **Return Volatility (%)**: Standard deviation of returns
 
 ## Update Information
-- **Last Update**: 2025-12-14 23:48:58
+- **Last Update**: 2025-12-15 00:18:11
 - **Update Frequency**: Daily
-- **Models**: DeepSeek, Gemini, GPT, LLaMA, Qwen
+- **Models**: Extracted from trading files (e.g., deepseek-v3, gemini-3-pro, gpt-5, llama-3.1-405b, qwen-72b)
 - **Patterns**: Pure Data, Data+Technical, Data+News
 
 ## Access

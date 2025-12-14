@@ -1,9 +1,9 @@
 {
-  "update_time": "2025-12-14 23:48:58",
+  "update_time": "2025-12-15 00:18:11",
   "data": [
     {
       "Pattern": "Pattern1-Pure Data",
-      "Model": "DEEPSEEK",
+      "Model": "deepseek-v3",
       "Initial Equity": "¥1,000,000.00",
       "Latest Equity": "¥1,006,630.00",
       "Total Profit": "¥+6,630.00",
@@ -15,12 +15,12 @@
       "Avg Daily Return (%)": "0.0948%",
       "Return Volatility (%)": "0.2583%",
       "Trading Days": 8,
-      "Analysis Date": "2025-12-14",
+      "Analysis Date": "2025-12-15",
       "Data Date": "20251212"
     },
     {
       "Pattern": "Pattern1-Pure Data",
-      "Model": "GEMINI",
+      "Model": "gemini-3-pro",
       "Initial Equity": "¥1,000,000.00",
       "Latest Equity": "¥997,199.00",
       "Total Profit": "¥-2,801.00",
@@ -32,12 +32,12 @@
       "Avg Daily Return (%)": "-0.0386%",
       "Return Volatility (%)": "0.5456%",
       "Trading Days": 8,
-      "Analysis Date": "2025-12-14",
+      "Analysis Date": "2025-12-15",
       "Data Date": "20251212"
     },
     {
       "Pattern": "Pattern1-Pure Data",
-      "Model": "GPT",
+      "Model": "gpt-5",
       "Initial Equity": "¥1,000,000.00",
       "Latest Equity": "¥1,003,202.00",
       "Total Profit": "¥+3,202.00",
@@ -49,12 +49,12 @@
       "Avg Daily Return (%)": "0.0461%",
       "Return Volatility (%)": "0.2941%",
       "Trading Days": 8,
-      "Analysis Date": "2025-12-14",
+      "Analysis Date": "2025-12-15",
       "Data Date": "20251212"
     },
     {
       "Pattern": "Pattern1-Pure Data",
-      "Model": "LLAMA",
+      "Model": "llama-3.1-405b",
       "Initial Equity": "¥1,000,000.00",
       "Latest Equity": "¥998,934.00",
       "Total Profit": "¥-1,066.00",
@@ -66,12 +66,12 @@
       "Avg Daily Return (%)": "-0.0150%",
       "Return Volatility (%)": "0.2158%",
       "Trading Days": 8,
-      "Analysis Date": "2025-12-14",
+      "Analysis Date": "2025-12-15",
       "Data Date": "20251212"
     },
     {
       "Pattern": "Pattern1-Pure Data",
-      "Model": "QWEN",
+      "Model": "qwen-72b",
       "Initial Equity": "¥1,000,000.00",
       "Latest Equity": "¥1,000,301.00",
       "Total Profit": "¥+301.00",
@@ -83,12 +83,12 @@
       "Avg Daily Return (%)": "0.0043%",
       "Return Volatility (%)": "0.0997%",
       "Trading Days": 8,
-      "Analysis Date": "2025-12-14",
+      "Analysis Date": "2025-12-15",
       "Data Date": "20251212"
     },
     {
       "Pattern": "Pattern2-Data+Technical",
-      "Model": "DEEPSEEK",
+      "Model": "deepseek-v3",
       "Initial Equity": "¥1,000,000.00",
       "Latest Equity": "¥1,007,365.00",
       "Total Profit": "¥+7,365.00",
@@ -100,12 +100,12 @@
       "Avg Daily Return (%)": "0.1052%",
       "Return Volatility (%)": "0.2642%",
       "Trading Days": 8,
-      "Analysis Date": "2025-12-14",
+      "Analysis Date": "2025-12-15",
       "Data Date": "20251212"
     },
     {
       "Pattern": "Pattern2-Data+Technical",
-      "Model": "GEMINI",
+      "Model": "gemini-3-pro",
       "Initial Equity": "¥1,000,000.00",
       "Latest Equity": "¥997,379.00",
       "Total Profit": "¥-2,621.00",
@@ -117,12 +117,12 @@
       "Avg Daily Return (%)": "-0.0372%",
       "Return Volatility (%)": "0.2347%",
       "Trading Days": 8,
-      "Analysis Date": "2025-12-14",
+      "Analysis Date": "2025-12-15",
       "Data Date": "20251212"
     },
     {
       "Pattern": "Pattern2-Data+Technical",
-      "Model": "GPT",
+      "Model": "gpt-5",
       "Initial Equity": "¥1,000,000.00",
       "Latest Equity": "¥1,001,270.00",
       "Total Profit": "¥+1,270.00",
@@ -134,12 +134,12 @@
       "Avg Daily Return (%)": "0.0186%",
       "Return Volatility (%)": "0.3067%",
       "Trading Days": 8,
-      "Analysis Date": "2025-12-14",
+      "Analysis Date": "2025-12-15",
       "Data Date": "20251212"
     },
     {
       "Pattern": "Pattern2-Data+Technical",
-      "Model": "LLAMA",
+      "Model": "llama-3.1-405b",
       "Initial Equity": "¥1,000,000.00",
       "Latest Equity": "¥1,006,314.00",
       "Total Profit": "¥+6,314.00",
@@ -151,12 +151,12 @@
       "Avg Daily Return (%)": "0.1051%",
       "Return Volatility (%)": "0.1936%",
       "Trading Days": 7,
-      "Analysis Date": "2025-12-14",
+      "Analysis Date": "2025-12-15",
       "Data Date": "20251212"
     },
     {
       "Pattern": "Pattern2-Data+Technical",
-      "Model": "QWEN",
+      "Model": "qwen-72b",
       "Initial Equity": "¥1,000,000.00",
       "Latest Equity": "¥1,005,814.00",
       "Total Profit": "¥+5,814.00",
@@ -168,12 +168,12 @@
       "Avg Daily Return (%)": "0.0830%",
       "Return Volatility (%)": "0.1766%",
       "Trading Days": 8,
-      "Analysis Date": "2025-12-14",
+      "Analysis Date": "2025-12-15",
       "Data Date": "20251212"
     },
     {
       "Pattern": "Pattern3-Data+News",
-      "Model": "DEEPSEEK",
+      "Model": "deepseek-v3",
       "Initial Equity": "¥1,000,000.00",
       "Latest Equity": "¥994,793.00",
       "Total Profit": "¥-5,207.00",
@@ -185,12 +185,12 @@
       "Avg Daily Return (%)": "-0.0733%",
       "Return Volatility (%)": "0.4944%",
       "Trading Days": 8,
-      "Analysis Date": "2025-12-14",
+      "Analysis Date": "2025-12-15",
       "Data Date": "20251212"
     },
     {
       "Pattern": "Pattern3-Data+News",
-      "Model": "GEMINI",
+      "Model": "gemini-3-pro",
       "Initial Equity": "¥1,000,000.00",
       "Latest Equity": "¥1,000,119.00",
       "Total Profit": "¥+119.00",
@@ -202,12 +202,12 @@
       "Avg Daily Return (%)": "0.0027%",
       "Return Volatility (%)": "0.4534%",
       "Trading Days": 8,
-      "Analysis Date": "2025-12-14",
+      "Analysis Date": "2025-12-15",
       "Data Date": "20251212"
     },
     {
       "Pattern": "Pattern3-Data+News",
-      "Model": "GPT",
+      "Model": "gpt-5",
       "Initial Equity": "¥1,000,000.00",
       "Latest Equity": "¥1,011,056.00",
       "Total Profit": "¥+11,056.00",
@@ -219,12 +219,12 @@
       "Avg Daily Return (%)": "0.1575%",
       "Return Volatility (%)": "0.2551%",
       "Trading Days": 8,
-      "Analysis Date": "2025-12-14",
+      "Analysis Date": "2025-12-15",
       "Data Date": "20251212"
     },
     {
       "Pattern": "Pattern3-Data+News",
-      "Model": "LLAMA",
+      "Model": "llama-3.1-405b",
       "Initial Equity": "¥1,000,000.00",
       "Latest Equity": "¥998,043.00",
       "Total Profit": "¥-1,957.00",
@@ -236,12 +236,12 @@
       "Avg Daily Return (%)": "-0.0273%",
       "Return Volatility (%)": "0.3581%",
       "Trading Days": 8,
-      "Analysis Date": "2025-12-14",
+      "Analysis Date": "2025-12-15",
       "Data Date": "20251212"
     },
     {
       "Pattern": "Pattern3-Data+News",
-      "Model": "QWEN",
+      "Model": "qwen-72b",
       "Initial Equity": "¥1,000,000.00",
       "Latest Equity": "¥1,005,498.00",
       "Total Profit": "¥+5,498.00",
@@ -253,7 +253,7 @@
       "Avg Daily Return (%)": "0.0792%",
       "Return Volatility (%)": "0.4091%",
       "Trading Days": 8,
-      "Analysis Date": "2025-12-14",
+      "Analysis Date": "2025-12-15",
       "Data Date": "20251212"
     }
   ],
