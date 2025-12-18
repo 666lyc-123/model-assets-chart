@@ -1,5 +1,5 @@
 {
-  "update_time": "2025-12-19 00:01:53",
+  "update_time": "2025-12-19 00:32:32",
   "data": [
     {
       "Pattern": "Pattern1-Pure Data",
@@ -21,15 +21,15 @@
     {
       "Pattern": "Pattern1-Pure Data",
       "Model": "gemini-3-pro",
-      "Initial Equity": "¥771,708.00",
-      "Latest Equity": "¥724,239.00",
-      "Total Profit": "¥-47,469.00",
-      "Total Return (%)": "-6.15%",
-      "Annual Return (%)": "-100.00%",
+      "Initial Equity": "¥1,000,000.00",
+      "Latest Equity": "¥1,001,002.00",
+      "Total Profit": "¥+1,002.00",
+      "Total Return (%)": "+0.10%",
+      "Annual Return (%)": "+28.71%",
       "Sharpe Ratio": 0,
-      "Max Drawdown (%)": "6.15%",
-      "Win Rate (%)": "0.0%",
-      "Avg Daily Return (%)": "-6.1512%",
+      "Max Drawdown (%)": "0.00%",
+      "Win Rate (%)": "100.0%",
+      "Avg Daily Return (%)": "0.1002%",
       "Return Volatility (%)": "0.0000%",
       "Trading Days": 2,
       "Analysis Date": "2025-12-19",
@@ -260,7 +260,7 @@
   "summary": {
     "total_models": 15,
     "patterns_analyzed": 3,
-    "avg_annual_return": -4.44,
+    "avg_annual_return": 4.15,
     "avg_sharpe_ratio": 0.0
   }
 }
