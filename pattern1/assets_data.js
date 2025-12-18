@@ -1,4 +1,4 @@
-// Pattern1-Pure Data Data - Auto-generated at 2025-12-18 23:45:10
+// Pattern1-Pure Data Data - Auto-generated at 2025-12-19 00:32:19
 var modelAssetsData = {
   "deepseek-v3": [
     [
@@ -33,11 +33,11 @@ var modelAssetsData = {
   "gemini-3-pro": [
     [
       "2025-12-17",
-      771708.1477999998
+      1000000.0
     ],
     [
       "2025-12-18",
-      724239.22732
+      1001002.4406
     ]
   ],
   "llama-3.1-405b": [
