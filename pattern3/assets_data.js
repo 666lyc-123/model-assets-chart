@@ -1,4 +1,4 @@
-// Pattern3-Data+News Data - Auto-generated at 2025-12-20 00:03:19
+// Pattern3-Data+News Data - Auto-generated at 2025-12-20 01:35:34
 var modelAssetsData = {
   "deepseek-v3": [
     [
@@ -39,6 +39,10 @@ var modelAssetsData = {
     ],
     [
       "2025-12-19",
+      1001862.3702624
+    ],
+    [
+      "2025-12-20",
       1001862.3702624
     ]
   ],
