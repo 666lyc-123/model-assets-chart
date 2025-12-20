@@ -1,4 +1,4 @@
-// Pattern1-Pure Data Data - Auto-generated at 2025-12-20 01:35:33
+// Pattern1-Pure Data Data - Auto-generated at 2025-12-20 10:04:04
 var modelAssetsData = {
   "deepseek-v3": [
     [
@@ -67,7 +67,7 @@ var modelAssetsData = {
     ],
     [
       "2025-12-19",
-      552852.5176181
+      1001073.7906181
     ]
   ]
 };
