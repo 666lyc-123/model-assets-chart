@@ -1,4 +1,4 @@
-// Pattern2-Data+Technical Data - Auto-generated at 2025-12-21 21:15:07
+// Pattern2-Data+Technical Data - Auto-generated at 2025-12-22 20:55:09
 var modelAssetsData = {
   "deepseek-v3": [
     [
@@ -20,6 +20,10 @@ var modelAssetsData = {
     [
       "2025-12-21",
       1000495.656
+    ],
+    [
+      "2025-12-22",
+      1002606.586
     ]
   ],
   "qwen-72b": [
@@ -42,6 +46,10 @@ var modelAssetsData = {
     [
       "2025-12-21",
       999997.0
+    ],
+    [
+      "2025-12-22",
+      1000321.0
     ]
   ],
   "gpt-5": [
@@ -64,6 +72,10 @@ var modelAssetsData = {
     [
       "2025-12-21",
       1001168.0671380999
+    ],
+    [
+      "2025-12-22",
+      1002182.8523380999
     ]
   ],
   "gemini-3-pro": [
@@ -108,6 +120,10 @@ var modelAssetsData = {
     [
       "2025-12-21",
       1000231.426
+    ],
+    [
+      "2025-12-22",
+      1000850.6259999999
     ]
   ]
 };
