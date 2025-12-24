@@ -1,131 +1,41 @@
-/* Dashboard CSS - White Background with Dark Text */
+/* Minimal Dashboard CSS - White Background with Dark Text */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #F5F7FA;
+    font-family: 'Arial', 'Segoe UI', sans-serif;
+}
+
 .dashboard-container {
     max-width: 2000px;
     margin: 0 auto;
-    padding: 30px;
+    padding: 20px;
     background-color: white;
-    font-family: 'Arial', 'Segoe UI', sans-serif;
-    color: #2C3E50;
 }
 
 .dashboard-header {
     text-align: center;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
     border-bottom: 2px solid #3498DB;
 }
 
 .dashboard-header h1 {
     color: #2C3E50;
     margin-bottom: 10px;
-    font-size: 32px;
+    font-size: 28px;
 }
 
 .dashboard-subtitle {
     color: #7F8C8D;
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-.update-info {
-    background-color: #F8F9FA;
-    border-radius: 8px;
-    padding: 15px 20px;
-    margin: 20px 0;
-    border-left: 4px solid #3498DB;
-}
-
-.update-info p {
-    margin: 8px 0;
-    color: #2C3E50;
-}
-
-.info-icon {
-    color: #3498DB;
-    margin-right: 10px;
-}
-
-.metrics-summary {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin: 25px 0;
-}
-
-.metric-card {
-    background-color: #F8F9FA;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    border-top: 4px solid #3498DB;
-}
-
-.metric-value {
-    font-size: 24px;
-    font-weight: bold;
-    color: #2C3E50;
-    margin: 10px 0;
-}
-
-.metric-label {
-    color: #7F8C8D;
     font-size: 14px;
 }
 
-.download-section {
-    margin-top: 30px;
-    text-align: center;
+/* Plotly table customization */
+.js-plotly-plot .plotly .modebar {
+    background-color: white !important;
 }
 
-.download-btn {
-    display: inline-block;
-    background-color: #3498DB;
-    color: white;
-    padding: 12px 24px;
-    margin: 0 10px;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: bold;
-    transition: background-color 0.3s;
-}
-
-.download-btn:hover {
-    background-color: #2980B9;
-    color: white;
-    text-decoration: none;
-}
-
-.btn-icon {
-    margin-right: 8px;
-}
-
-.dashboard-footer {
-    text-align: center;
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px solid #ECF0F1;
-    color: #95A5A6;
-    font-size: 14px;
-}
-
-/* Responsive design */
-@media (max-width: 1200px) {
-    .dashboard-container {
-        padding: 20px;
-    }
-}
-
-@media (max-width: 768px) {
-    .dashboard-header h1 {
-        font-size: 24px;
-    }
-    
-    .download-btn {
-        display: block;
-        margin: 10px 0;
-    }
-    
-    .metrics-summary {
-        grid-template-columns: 1fr;
-    }
+.js-plotly-plot .plotly .modebar-btn path {
+    fill: #2C3E50 !important;
 }
