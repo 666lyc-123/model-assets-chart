@@ -1,5 +1,5 @@
 {
-  "update_time": "2025-12-25 00:06:36",
+  "update_time": "2025-12-25 00:09:11",
   "data": [
     {
       "Pattern": "Pattern1-Pure Data",
@@ -185,19 +185,19 @@
       "Pattern": "Pattern3-Data+News",
       "Model": "deepseek-v3",
       "Initial Equity": "¥1,000,000.00",
-      "Latest Equity": "¥1,003,142.00",
-      "Total Profit": "¥+3,142.00",
-      "Total Return (%)": "+0.31%",
-      "Annual Return (%)": "+16.98%",
-      "Sharpe Ratio": 14.046,
+      "Latest Equity": "¥1,005,052.00",
+      "Total Profit": "¥+5,052.00",
+      "Total Return (%)": "+0.51%",
+      "Annual Return (%)": "+23.36%",
+      "Sharpe Ratio": 17.501,
       "Max Drawdown (%)": "0.00%",
-      "Win Rate (%)": "50.0%",
-      "Avg Daily Return (%)": "0.0785%",
-      "Return Volatility (%)": "0.0794%",
-      "Trading Days": 5,
-      "Files Count": 5,
+      "Win Rate (%)": "60.0%",
+      "Avg Daily Return (%)": "0.1009%",
+      "Return Volatility (%)": "0.0840%",
+      "Trading Days": 6,
+      "Files Count": 6,
       "Analysis Date": "2025-12-25",
-      "Data Date": "20251223"
+      "Data Date": "20251224"
     },
     {
       "Pattern": "Pattern3-Data+News",
@@ -275,6 +275,6 @@
   "summary": {
     "total_models": 15,
     "patterns_analyzed": 3,
-    "avg_trading_days": 5.9
+    "avg_trading_days": 6.0
   }
 }
