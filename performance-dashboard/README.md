@@ -1,7 +1,7 @@
 # Performance Dashboard
 
 ## Overview
-Simplified dashboard showing trading performance analysis for five large language models across three trading strategies.
+Simplified dashboard showing trading performance analysis for large language models across trading strategies.
 
 ## Features
 - Clean, minimal design with only essential information
@@ -10,10 +10,11 @@ Simplified dashboard showing trading performance analysis for five large languag
 - Dynamic trading days calculation based on actual file count
 
 ## Files
-1. **index.html** - Main dashboard page (simplified)
-2. **plotly_chart.html** - Plotly table visualization
-3. **assets/css/dashboard.css** - Minimal styling
-4. **data/processed/performance_data.json** - Performance data
+1. **index.html** - Main dashboard page (complete with chart)
+2. **plotly_chart.html** - Standalone Plotly visualization
+3. **data/processed/performance_data.json** - Performance data
+4. **reports/daily/Trading_Performance_Analysis.xlsx** - Daily Excel report
+5. **archive/** - Historical performance data
 
 ## Performance Metrics
 - **Annual Return (%)**: Annualized total return based on actual trading days
@@ -26,8 +27,9 @@ Simplified dashboard showing trading performance analysis for five large languag
 ## Technical Details
 - Built with Python, Pandas, and Plotly
 - Automatically updated daily
-- Minimal design: Title + Table only
+- Minimal design: Centered title + Table only
 - No download links or footer information
+- Responsive design for all devices
 
 ---
-© 2024 Large Model Trading Competition | Simplified Dashboard
+© 2024 Large Model Trading Competition | Automated Dashboard v3.0
