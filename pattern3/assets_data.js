@@ -1,4 +1,4 @@
-// Pattern3-Data+News Data - Auto-generated at 2026-01-06 18:58:16
+// Pattern3-Data+News Data - Auto-generated at 2026-01-06 19:02:26
 var modelAssetsData = {
   "deepseek-v3": [
     [
@@ -416,6 +416,10 @@ var modelAssetsData = {
     [
       "2026-01-05",
       1000296.8
+    ],
+    [
+      "2026-01-06",
+      1000689.8
     ]
   ]
 };
