@@ -1,4 +1,4 @@
-// Pattern3-Data+News Data - Auto-generated at 2026-01-05 22:05:06
+// Pattern3-Data+News Data - Auto-generated at 2026-01-06 18:58:16
 var modelAssetsData = {
   "deepseek-v3": [
     [
@@ -80,6 +80,10 @@ var modelAssetsData = {
     [
       "2026-01-05",
       1003109.6775999999
+    ],
+    [
+      "2026-01-06",
+      1010040.8775999999
     ]
   ],
   "qwen-72b": [
@@ -162,6 +166,10 @@ var modelAssetsData = {
     [
       "2026-01-05",
       1000181.2
+    ],
+    [
+      "2026-01-06",
+      1000652.7
     ]
   ],
   "gpt-5": [
@@ -244,6 +252,10 @@ var modelAssetsData = {
     [
       "2026-01-05",
       1004824.6197
+    ],
+    [
+      "2026-01-06",
+      1008683.6197
     ]
   ],
   "gemini-3-pro": [
@@ -326,6 +338,10 @@ var modelAssetsData = {
     [
       "2026-01-05",
       1027423.65086
+    ],
+    [
+      "2026-01-06",
+      1042794.5460000001
     ]
   ],
   "llama-3.1-405b": [
