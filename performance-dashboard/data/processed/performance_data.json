@@ -1,5 +1,5 @@
 {
-  "update_time": "2026-01-06 18:58:33",
+  "update_time": "2026-01-06 19:02:38",
   "data": [
     {
       "Pattern": "Pattern1-Pure Data",
@@ -239,19 +239,19 @@
       "Pattern": "Pattern3-Data+News",
       "Model": "llama-3.1-405b",
       "Initial Equity": "¥1,000,000.00",
-      "Latest Equity": "¥1,000,296.80",
-      "Total Profit": "¥+296.80",
-      "Total Return (%)": "+0.03%",
-      "Annual Return (%)": "+0.63%",
-      "Sharpe Ratio": -3.019,
+      "Latest Equity": "¥1,000,689.80",
+      "Total Profit": "¥+689.80",
+      "Total Return (%)": "+0.07%",
+      "Annual Return (%)": "+1.35%",
+      "Sharpe Ratio": -1.201,
       "Max Drawdown (%)": "0.06%",
-      "Win Rate (%)": "54.5%",
-      "Avg Daily Return (%)": "0.0027%",
-      "Annualized Volatility (%)": "0.4304%",
-      "Trading Days": 12,
-      "Files Count": 12,
+      "Win Rate (%)": "58.3%",
+      "Avg Daily Return (%)": "0.0058%",
+      "Annualized Volatility (%)": "0.4422%",
+      "Trading Days": 13,
+      "Files Count": 13,
       "Analysis Date": "2026-01-06",
-      "Data Date": "20260105"
+      "Data Date": "20260106"
     },
     {
       "Pattern": "Pattern3-Data+News",
