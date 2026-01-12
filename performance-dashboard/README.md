@@ -1,29 +1,29 @@
-# Performance Dashboard
-## Overview
-Simplified dashboard showing trading performance analysis for large language models across trading strategies.
-## Features
-- Clean, minimal design with only essential information
-- White background with dark text for optimal readability
-- Centered title and responsive table
-- Dynamic trading days calculation based on actual file count
-## Files
-1. **index.html** - Main dashboard page (complete with chart)
-2. **plotly_chart.html** - Standalone Plotly visualization
-3. **data/processed/performance_data.json** - Performance data
-4. **reports/daily/Trading_Performance_Analysis.xlsx** - Daily Excel report
-5. **archive/** - Historical performance data
-## Performance Metrics
-- **Annual Return (%)**: Annualized total return based on actual trading days
-- **Sharpe Ratio**: Risk-adjusted return measure
-- **Max Drawdown (%)**: Maximum loss from peak
-- **Win Rate (%)**: Percentage of profitable days
-- **Annualized Volatility (%)**: Annualized standard deviation of daily returns (×√252)
-- **Trading Days**: Actual number of trading days (from file count)
-## Technical Details
-- Built with Python, Pandas, and Plotly
-- Automatically updated daily
-- Minimal design: Centered title + Table only
-- No download links or footer information
-- Responsive design for all devices
+# 表现仪表板
+## 概览
+简化仪表板，显示大语言模型在不同交易策略中的表现分析。
+## 功能
+- 简洁、极简设计，仅包含必要信息
+- 白色背景搭配深色文字，优化可读性
+- 居中标题和响应式表格
+- 基于实际文件数量动态计算交易日数
+## 文件
+1. **index.html** - 主仪表板页面（包含完整图表）
+2. **plotly_chart.html** - 独立的Plotly可视化
+3. **data/processed/performance_data.json** - 表现数据
+4. **reports/daily/交易表现分析.xlsx** - 每日Excel报告
+5. **archive/** - 历史表现数据
+## 表现指标
+- **年化收益率(%)**：基于实际交易日数的年化总收益
+- **夏普比率**：风险调整后收益指标
+- **最大回撤(%)**：从峰值到谷底的最大损失
+- **胜率(%)**：盈利交易日百分比
+- **年化波动率(%)**：日收益率的年化标准差（×√252）
+- **交易日数**：实际交易日数（基于文件数量）
+## 技术细节
+- 使用Python、Pandas和Plotly构建
+- 每日自动更新
+- 极简设计：居中标题 + 仅表格
+- 无下载链接或页脚信息
+- 响应式设计，适配所有设备
 ---
-© 2024 Large Model Trading Competition | Automated Dashboard v3.1
+© 2024 大模型交易比赛 | 自动化仪表板 v3.1
