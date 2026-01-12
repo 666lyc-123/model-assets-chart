@@ -1,4 +1,4 @@
-// Pattern3-Data+News Data - Auto-generated at 2026-01-09 17:50:43
+// 模式3-数据+新闻 数据 - 自动生成于 2026-01-12 12:32:45
 var modelAssetsData = {
   "deepseek-v3": [
     [

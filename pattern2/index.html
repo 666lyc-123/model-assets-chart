@@ -2,13 +2,13 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Pattern2-Data+Technical - Asset Trend Chart</title>
+    <title>模式2-数据+技术 - 资产趋势图表</title>
     <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
     <style>
         body { 
             margin: 0;
             padding: 0;
-            font-family: 'Arial', 'Helvetica', sans-serif;
+            font-family: 'Microsoft YaHei', 'Arial', sans-serif;
             background: #f5f7fa;
         }
         .container {
@@ -113,44 +113,44 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📈 Pattern2-Data+Technical</h1>
-            <p>Strategy combining data analysis with technical indicators | Auto-updating Chart System</p>
+            <h1>📈 模式2-数据+技术</h1>
+            <p>结合技术指标与数据分析的策略 | 自动更新图表系统</p>
         </div>
         
         <div class="nav">
-            <a href="../index.html">🏠 Overview</a>
-            <a href="../pattern1/index.html">Pattern 1: Pure Data</a>
-            <a href="../pattern2/index.html">Pattern 2: Data+Technical</a>
-            <a href="../pattern3/index.html">Pattern 3: Data+News</a>
+            <a href="../index.html">🏠 概览</a>
+            <a href="../pattern1/index.html">模式1：纯数据</a>
+            <a href="../pattern2/index.html">模式2：数据+技术</a>
+            <a href="../pattern3/index.html">模式3：数据+新闻</a>
         </div>
         
         <div id="chart"></div>
         
         <div class="stats" id="statsContainer">
-            <!-- Statistics will be dynamically generated -->
+            <!-- 统计数据将动态生成 -->
         </div>
         
         <div class="footer">
-            <p>Last Update: <span id="updateTime">2026-01-09 17:50:43</span></p>
-            <p>© Large Model Trading Competition | Auto-Update System</p>
+            <p>最后更新：<span id="updateTime">2026-01-12 12:32:45</span></p>
+            <p>© 大模型交易比赛 | 自动更新系统</p>
         </div>
     </div>
 
     <script src="./assets_data.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const currentPattern = "Pattern2-Data+Technical";
+            const currentPattern = "模式2-数据+技术";
             document.querySelectorAll('.nav a').forEach(link => {
                 if (link.textContent.includes(currentPattern)) {
                     link.classList.add('active');
                 }
             });
             
-            document.getElementById('updateTime').textContent = new Date().toLocaleString('en-US');
+            document.getElementById('updateTime').textContent = new Date().toLocaleString('zh-CN');
             
             if (typeof modelAssetsData === 'undefined') {
                 document.getElementById('chart').innerHTML = 
-                    '<div style="text-align:center; padding:50px;"><h3>Data Loading Failed</h3><p>Please check data files</p></div>';
+                    '<div style="text-align:center; padding:50px;"><h3>数据加载失败</h3><p>请检查数据文件</p></div>';
                 return;
             }
             
@@ -181,10 +181,10 @@
                 statsHtml += `
                     <div class="stat-card">
                         <h3>${modelName}</h3>
-                        <div class="value">¥${lastValue.toLocaleString('en-US')}</div>
+                        <div class="value">¥${lastValue.toLocaleString('zh-CN')}</div>
                         <div class="change ${changeClass}">${changeSign}${changePercent}%</div>
                         <div style="font-size:12px; color:#999; margin-top:8px;">
-                            ${data.length} days | Initial: ¥${firstValue.toLocaleString('en-US')}
+                            ${data.length} 天 | 初始：¥${firstValue.toLocaleString('zh-CN')}
                         </div>
                     </div>
                 `;
@@ -206,13 +206,13 @@
             
             if (traces.length > 0) {
                 const layout = {
-                    title: 'Pattern2-Data+Technical - Asset Trend',
+                    title: '模式2-数据+技术 - 资产趋势',
                     xaxis: { 
-                        title: 'Date',
+                        title: '日期',
                         gridcolor: '#f0f0f0'
                     },
                     yaxis: { 
-                        title: 'Total Assets (CNY)',
+                        title: '总资产（人民币）',
                         tickformat: ',.0f',
                         gridcolor: '#f0f0f0'
                     },
@@ -234,7 +234,7 @@
                 });
             } else {
                 document.getElementById('chart').innerHTML = 
-                    '<div style="text-align:center; padding:50px;"><h3>No Chart Data</h3></div>';
+                    '<div style="text-align:center; padding:50px;"><h3>无图表数据</h3></div>';
             }
         });
     </script>
