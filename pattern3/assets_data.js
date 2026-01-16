@@ -1,4 +1,4 @@
-// 模式3-数据+新闻 数据 - 自动生成于 2026-01-15 16:04:58
+// 模式3-数据+新闻 数据 - 移动端优化
 var modelAssetsData = {
   "deepseek-v3": [
     [
@@ -582,4 +582,36 @@ var modelAssetsData = {
       1001533.4
     ]
   ]
+};
+var modelSummaryData = {
+  "deepseek-v3": {
+    "current": 1015544.2544199998,
+    "change": 15544.25441999978,
+    "change_pct": 1.554425441999978,
+    "days": 29
+  },
+  "qwen-72b": {
+    "current": 1001961.5,
+    "change": 1961.5,
+    "change_pct": 0.19615000000000002,
+    "days": 29
+  },
+  "gpt-5": {
+    "current": 1011176.6197,
+    "change": 11176.61970000004,
+    "change_pct": 1.117661970000004,
+    "days": 29
+  },
+  "gemini-3-pro": {
+    "current": 1051727.0815000003,
+    "change": 51727.08150000032,
+    "change_pct": 5.172708150000032,
+    "days": 29
+  },
+  "llama-3.1-405b": {
+    "current": 1001533.4,
+    "change": 1533.4000000000233,
+    "change_pct": 0.15334000000000234,
+    "days": 27
+  }
 };

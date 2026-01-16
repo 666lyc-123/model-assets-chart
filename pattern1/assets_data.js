@@ -1,4 +1,4 @@
-// 模式1-纯数据 数据 - 自动生成于 2026-01-15 16:04:58
+// 模式1-纯数据 数据 - 移动端优化
 var modelAssetsData = {
   "deepseek-v3": [
     [
@@ -590,4 +590,36 @@ var modelAssetsData = {
       1006300.7888000001
     ]
   ]
+};
+var modelSummaryData = {
+  "deepseek-v3": {
+    "current": 1027638.2513,
+    "change": 27638.251300000004,
+    "change_pct": 2.7638251300000003,
+    "days": 29
+  },
+  "qwen-72b": {
+    "current": 1006488.0,
+    "change": 6488.0,
+    "change_pct": 0.6487999999999999,
+    "days": 29
+  },
+  "gpt-5": {
+    "current": 1021453.50218,
+    "change": 21453.502179999952,
+    "change_pct": 2.145350217999995,
+    "days": 29
+  },
+  "gemini-3-pro": {
+    "current": 1052725.8841900006,
+    "change": 52725.884190000594,
+    "change_pct": 5.272588419000059,
+    "days": 29
+  },
+  "llama-3.1-405b": {
+    "current": 1006300.7888000001,
+    "change": 6300.788800000097,
+    "change_pct": 0.6300788800000097,
+    "days": 29
+  }
 };

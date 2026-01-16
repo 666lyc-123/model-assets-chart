@@ -1,4 +1,4 @@
-// 模式2-数据+技术 数据 - 自动生成于 2026-01-15 16:04:58
+// 模式2-数据+技术 数据 - 移动端优化
 var modelAssetsData = {
   "deepseek-v3": [
     [
@@ -590,4 +590,36 @@ var modelAssetsData = {
       1061934.56317
     ]
   ]
+};
+var modelSummaryData = {
+  "deepseek-v3": {
+    "current": 1046529.79358,
+    "change": 46529.793580000056,
+    "change_pct": 4.652979358000006,
+    "days": 29
+  },
+  "qwen-72b": {
+    "current": 1006925.0,
+    "change": 6925.0,
+    "change_pct": 0.6925,
+    "days": 29
+  },
+  "gpt-5": {
+    "current": 1037130.61012,
+    "change": 37130.61011999997,
+    "change_pct": 3.713061011999997,
+    "days": 29
+  },
+  "gemini-3-pro": {
+    "current": 1033987.20767,
+    "change": 33987.20767000003,
+    "change_pct": 3.3987207670000035,
+    "days": 29
+  },
+  "llama-3.1-405b": {
+    "current": 1061934.56317,
+    "change": 61934.56316999998,
+    "change_pct": 6.193456316999998,
+    "days": 29
+  }
 };

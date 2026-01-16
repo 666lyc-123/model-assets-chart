@@ -1,200 +1,412 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大模型交易资产图表</title>
-    
-    <!-- Plotly CDN -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>模式1-纯数据 - 移动端</title>
     <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
-    
     <style>
+        :root {
+            --primary: #667eea;
+            --primary-dark: #764ba2;
+            --secondary: #4c51bf;
+            --success: #48bb78;
+            --danger: #f56565;
+            --warning: #ed8936;
+            --light: #f7fafc;
+            --dark: #2d3748;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
-            font-family: Arial, sans-serif;
-            background: #f8f9fa;
-            padding: 15px;
+            font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            line-height: 1.5;
+            padding: 16px;
         }
         
-        .container {
-            max-width: 1200px;
+        .app-container {
+            max-width: 480px;
             margin: 0 auto;
+            width: 100%;
         }
         
         .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 16px;
             text-align: center;
-            margin-bottom: 20px;
+            box-shadow: var(--shadow);
         }
         
         .header h1 {
-            color: #2c3e50;
-            margin-bottom: 5px;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 6px;
         }
         
-        .header p {
-            color: #7f8c8d;
+        .header .subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 12px;
+        }
+        
+        .time-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .chart-section {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow);
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        
+        .section-title h2 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark);
         }
         
         .chart-container {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        
-        #chart {
             width: 100%;
-            height: 500px;
+            height: 350px;
+            margin-bottom: 16px;
         }
         
-        .stats {
+        .chart-legend {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 12px;
         }
         
-        .stat-card {
-            flex: 1;
-            min-width: 150px;
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #4a5568;
         }
         
-        .stat-card h3 {
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .models-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        @media (min-width: 400px) {
+            .models-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .model-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
+            backdrop-filter: blur(5px);
+            border-radius: var(--border-radius);
+            padding: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .model-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        
+        .model-name {
             font-size: 14px;
-            color: #666;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .model-short {
+            background: var(--light);
+            color: var(--dark);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        
+        .model-value {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .model-change {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .change-up {
+            color: var(--success);
+        }
+        
+        .change-down {
+            color: var(--danger);
+        }
+        
+        .change-icon {
+            font-size: 14px;
+        }
+        
+        .transaction-section {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow);
+        }
+        
+        .transaction-levels {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .level-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background: linear-gradient(90deg, #edf2f7 0%, #e2e8f0 100%);
+            border-radius: 8px;
+        }
+        
+        .level-info {
+            flex: 1;
+        }
+        
+        .level-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+        
+        .level-bar {
+            width: 60%;
+            height: 8px;
+            background: linear-gradient(90deg, #cbd5e0 0%, #a0aec0 100%);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 4px 0;
+        }
+        
+        .level-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+        
+        .level-value {
+            font-size: 12px;
+            color: #718096;
+        }
+        
+        .time-section {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow);
+        }
+        
+        .time-comparison {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        
+        .time-card {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .time-label {
+            font-size: 12px;
+            color: #718096;
             margin-bottom: 8px;
         }
         
-        .stat-value {
+        .time-value {
             font-size: 18px;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 5px;
+            font-weight: 700;
+            color: var(--dark);
         }
         
-        .stat-change {
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        .positive {
-            color: #27ae60;
-        }
-        
-        .negative {
-            color: #e74c3c;
-        }
-        
-        .update-time {
+        .footer {
             text-align: center;
-            color: #95a5a6;
-            font-size: 14px;
-            padding: 10px;
+            padding: 16px;
+            color: white;
+            font-size: 12px;
+            opacity: 0.9;
         }
         
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 20px 0;
-            display: none;
-        }
-        
-        @media (max-width: 768px) {
-            #chart {
-                height: 400px;
-            }
-            
-            .stat-card {
-                min-width: 120px;
-            }
+        .github-link {
+            color: white;
+            text-decoration: underline;
+            margin-top: 8px;
+            display: inline-block;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="app-container">
         <div class="header">
-            <h1>📈 大模型交易资产趋势</h1>
-            <p>模式1：纯数据分析 | 实时更新</p>
+            <h1>模式1-纯数据</h1>
+            <div class="subtitle">纯数据分析策略</div>
+            <div class="time-badge" id="currentTime">2026-01-16 12:49:16</div>
         </div>
         
-        <div id="errorMessage" class="error-message"></div>
-        
-        <div class="chart-container">
-            <div id="chart"></div>
+        <div class="chart-section">
+            <div class="section-title">
+                <h2>📈 资产趋势对比</h2>
+            </div>
+            <div id="chart" class="chart-container"></div>
+            <div id="chartLegend" class="chart-legend"></div>
         </div>
         
-        <div class="stats" id="statsContainer">
-            <!-- 统计数据会在这里动态生成 -->
+        <div class="models-grid" id="modelsContainer"></div>
+        
+        <div class="transaction-section">
+            <div class="section-title">
+                <h2>💰 成交额分布</h2>
+            </div>
+            <div class="transaction-levels">
+                <div class="level-item">
+                    <div class="level-info">
+                        <div class="level-title">基础层级</div>
+                        <div class="level-bar">
+                            <div class="level-fill" style="width: 20%; background: linear-gradient(90deg, #48bb78, #38a169);"></div>
+                        </div>
+                    </div>
+                    <div class="level-value">20,000</div>
+                </div>
+                <div class="level-item">
+                    <div class="level-info">
+                        <div class="level-title">进阶层级</div>
+                        <div class="level-bar">
+                            <div class="level-fill" style="width: 50%; background: linear-gradient(90deg, #4299e1, #3182ce);"></div>
+                        </div>
+                    </div>
+                    <div class="level-value">10,000</div>
+                </div>
+                <div class="level-item">
+                    <div class="level-info">
+                        <div class="level-title">高级层级</div>
+                        <div class="level-bar">
+                            <div class="level-fill" style="width: 5%; background: linear-gradient(90deg, #ed8936, #dd6b20);"></div>
+                        </div>
+                    </div>
+                    <div class="level-value">1,000,000</div>
+                </div>
+            </div>
         </div>
         
-        <div class="update-time">
-            最后更新: <span id="updateTime">2026-01-16 10:55:31</span>
+        <div class="time-section">
+            <div class="section-title">
+                <h2>📅 时间节点对比</h2>
+            </div>
+            <div class="time-comparison">
+                <div class="time-card">
+                    <div class="time-label">Dec 2025</div>
+                    <div class="time-value">28,026</div>
+                </div>
+                <div class="time-card">
+                    <div class="time-label">Jan 4</div>
+                    <div class="time-value" id="latestValue">--</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div>数据来源：内部统计系统</div>
+            <div>更新时间实时同步</div>
+            <a href="https://github.com/666lyc-123/model-assets-chart" 
+               class="github-link" target="_blank">
+                GitHub仓库
+            </a>
         </div>
     </div>
-    
+
+    <script src="./assets_data.js"></script>
     <script>
-        // 内联数据 - 避免外部文件加载问题
-        const modelAssetsData = {"deepseek-v3": [["2025-12-17", 1000000], ["2025-12-18", 1000101.7], ["2025-12-19", 1000681.7415], ["2025-12-20", 1000681.7415], ["2025-12-21", 1000681.7415], ["2025-12-22", 1001603.6415], ["2025-12-23", 1001852.4415000001], ["2025-12-24", 1002431.2405000001], ["2025-12-25", 1002054.4565000001], ["2025-12-26", 1006258.187], ["2025-12-27", 1006258.187], ["2025-12-28", 1006258.187], ["2025-12-29", 1000657.577], ["2025-12-30", 1001844.695], ["2025-12-31", 1001493.2949999999], ["2026-01-01", 1001493.2949999999], ["2026-01-02", 1001493.2949999999], ["2026-01-03", 1001493.2949999999], ["2026-01-04", 1001493.2949999999], ["2026-01-05", 1006791.8314999999], ["2026-01-06", 1017466.4702999999], ["2026-01-07", 1018509.4312999999], ["2026-01-08", 1012068.2982999999], ["2026-01-09", 1019638.0983], ["2026-01-10", 1019638.0983], ["2026-01-11", 1019638.0983], ["2026-01-12", 1024948.9513], ["2026-01-13", 1025943.5512999999], ["2026-01-14", 1027638.2513]], "qwen-72b": [["2025-12-17", 1000000], ["2025-12-18", 1000002.0], ["2025-12-19", 1000017.0], ["2025-12-20", 1000017.0], ["2025-12-21", 1000017.0], ["2025-12-22", 1000423.0], ["2025-12-23", 1000699.0], ["2025-12-24", 1000642.0], ["2025-12-25", 1000307.0], ["2025-12-26", 1000792.0], ["2025-12-27", 1000792.0], ["2025-12-28", 1000792.0], ["2025-12-29", 1000148.0], ["2025-12-30", 998974.0], ["2025-12-31", 998418.0], ["2026-01-01", 998418.0], ["2026-01-02", 998418.0], ["2026-01-03", 998418.0], ["2026-01-04", 998418.0], ["2026-01-05", 1000294.0], ["2026-01-06", 1001234.0], ["2026-01-07", 1000529.0], ["2026-01-08", 1000348.0], ["2026-01-09", 1001518.0], ["2026-01-10", 1001518.0], ["2026-01-11", 1001518.0], ["2026-01-12", 1004115.0], ["2026-01-13", 1004378.0], ["2026-01-14", 1006488.0]], "gpt-5": [["2025-12-17", 1000000], ["2025-12-18", 999540.4671400001], ["2025-12-19", 1000288.8299400001], ["2025-12-20", 1000288.8299400001], ["2025-12-21", 1000288.8299400001], ["2025-12-22", 1004026.8299400001], ["2025-12-23", 1006065.02994], ["2025-12-24", 1006423.02994], ["2025-12-25", 1005216.52994], ["2025-12-26", 1007500.3299400001], ["2025-12-27", 1007500.3299400001], ["2025-12-28", 1007500.3299400001], ["2025-12-29", 1005201.1299400001], ["2025-12-30", 1002323.7299400001], ["2025-12-31", 1000848.5644400001], ["2026-01-01", 1000848.5644400001], ["2026-01-02", 1000848.5644400001], ["2026-01-03", 1000848.5644400001], ["2026-01-04", 1000848.5644400001], ["2026-01-05", 1007804.26444], ["2026-01-06", 1013157.36444], ["2026-01-07", 1011533.86444], ["2026-01-08", 1008252.47494], ["2026-01-09", 1014809.17794], ["2026-01-10", 1014809.17794], ["2026-01-11", 1014809.17794], ["2026-01-12", 1020348.80034], ["2026-01-13", 1021259.8707799999], ["2026-01-14", 1021453.50218]], "gemini-3-pro": [["2025-12-17", 1000000], ["2025-12-18", 1000808.7391000001], ["2025-12-19", 1005707.5431200002], ["2025-12-20", 1005707.5431200002], ["2025-12-21", 1005707.5431200002], ["2025-12-22", 1014609.6494200001], ["2025-12-23", 1017854.3885700002], ["2025-12-24", 1021186.0126300001], ["2025-12-25", 1018434.3757300002], ["2025-12-26", 1027981.3226300002], ["2025-12-27", 1027981.3226300002], ["2025-12-28", 1027981.3226300002], ["2025-12-29", 1018690.3138300002], ["2025-12-30", 1020139.5232100002], ["2025-12-31", 1018822.2826100002], ["2026-01-01", 1018822.2826100002], ["2026-01-02", 1018822.2826100002], ["2026-01-03", 1018822.2826100002], ["2026-01-04", 1018822.2826100002], ["2026-01-05", 1028450.6759900003], ["2026-01-06", 1043892.1159900003], ["2026-01-07", 1043226.0489900004], ["2026-01-08", 1034427.6747900004], ["2026-01-09", 1042439.9789900004], ["2026-01-10", 1042439.9789900004], ["2026-01-11", 1042439.9789900004], ["2026-01-12", 1049943.8942900004], ["2026-01-13", 1052408.4566900006], ["2026-01-14", 1052725.8841900006]], "llama-3.1-405b": [["2025-12-17", 1000000], ["2025-12-18", 1000042.067], ["2025-12-19", 1000012.067], ["2025-12-20", 1000012.067], ["2025-12-21", 1000012.067], ["2025-12-22", 1002306.067], ["2025-12-23", 1003849.067], ["2025-12-24", 1003765.2356], ["2025-12-25", 1002613.2356], ["2025-12-26", 1004139.2356], ["2025-12-27", 1004139.2356], ["2025-12-28", 1004139.2356], ["2025-12-29", 1002420.9356], ["2025-12-30", 999672.0908], ["2025-12-31", 998753.0677], ["2026-01-01", 998753.0677], ["2026-01-02", 998753.0677], ["2026-01-03", 998753.0677], ["2026-01-04", 998753.0677], ["2026-01-05", 1000207.7888], ["2026-01-06", 1002465.0888], ["2026-01-07", 1002963.5888], ["2026-01-08", 1001422.0888], ["2026-01-09", 1003464.4888], ["2026-01-10", 1003464.4888], ["2026-01-11", 1003464.4888], ["2026-01-12", 1004906.3888000001], ["2026-01-13", 1004929.3888000001], ["2026-01-14", 1006300.7888000001]]};
-        
-        console.log('数据加载成功，模型数量:', Object.keys(modelAssetsData).length);
+        const colors = {"deepseek-v3": "#2196f3", "qwen-72b": "#ff9800", "gpt-5": "#e91e63", "gemini-3-pro": "#4caf50", "llama-3.1-405b": "#9c27b0"};
+        let chartInstance = null;
         
         document.addEventListener('DOMContentLoaded', function() {
-            try {
-                // 检查Plotly是否加载
-                if (typeof Plotly === 'undefined') {
-                    showError('Plotly图表库加载失败，请刷新页面');
-                    return;
-                }
-                
-                // 检查数据
-                if (!modelAssetsData || Object.keys(modelAssetsData).length === 0) {
-                    showError('暂无数据可用');
-                    return;
-                }
-                
-                // 渲染图表
-                renderChart();
-                
-                // 渲染统计数据
-                renderStats();
-                
-                // 更新时间显示
-                updateTimeDisplay();
-                
-            } catch(error) {
-                showError('图表初始化错误: ' + error.message);
-                console.error(error);
+            if (typeof modelAssetsData === 'undefined') {
+                console.error('数据文件加载失败');
+                return;
             }
+            
+            initDashboard();
         });
         
-        function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.innerHTML = '⚠️ ' + message;
-            errorDiv.style.display = 'block';
+        function initDashboard() {
+            renderChart();
+            renderModelCards();
+            updateLatestValue();
+            startLiveUpdates();
         }
         
         function renderChart() {
             const traces = [];
-            const colors = {"deepseek-v3": "#1f77b4", "qwen-72b": "#9467bd", "gpt-5": "#8c564b", "gemini-3-pro": "#2ca02c", "llama-3.1-405b": "#d62728"};
+            const legendItems = [];
             
-            for (const modelName in modelAssetsData) {
-                const data = modelAssetsData[modelName];
-                if (data.length === 0) continue;
+            for (const [modelName, data] of Object.entries(modelAssetsData)) {
+                if (!data || data.length === 0) continue;
                 
                 const x = data.map(item => item[0]);
                 const y = data.map(item => item[1]);
+                const color = colors[modelName] || '#666';
                 
                 traces.push({
                     x: x,
@@ -202,13 +414,17 @@
                     mode: 'lines+markers',
                     name: modelName,
                     line: { 
-                        color: colors[modelName] || '#666',
-                        width: 2,
+                        color: color,
+                        width: 3,
                         shape: 'spline'
                     },
                     marker: {
                         size: 6,
-                        opacity: 0.8
+                        color: color,
+                        line: {
+                            width: 1,
+                            color: 'white'
+                        }
                     },
                     hovertemplate: 
                         '<b>日期：</b>%{x}<br>' +
@@ -216,111 +432,164 @@
                         '<b>资产：</b>¥%{y:,.0f}<br>' +
                         '<extra></extra>'
                 });
+                
+                legendItems.push(`
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: ${color}"></div>
+                        <span>${modelName}</span>
+                    </div>
+                `);
             }
             
             if (traces.length === 0) {
-                showError('没有有效的图表数据');
+                document.getElementById('chart').innerHTML = '<div style="text-align:center;padding:40px;color:#718096">暂无数据</div>';
                 return;
             }
             
+            document.getElementById('chartLegend').innerHTML = legendItems.join('');
+            
             const layout = {
                 title: {
-                    text: '资产趋势图',
-                    font: { size: 18 }
+                    text: '资产趋势对比',
+                    font: { size: 14 },
+                    x: 0.5
                 },
                 xaxis: {
-                    title: '日期',
+                    title: { text: '📅 日期', font: { size: 12 } },
+                    gridcolor: 'rgba(0,0,0,0.05)',
+                    tickfont: { size: 11 },
                     type: 'date',
-                    gridcolor: '#f0f0f0'
+                    showspikes: true,
+                    spikemode: 'across',
+                    spikesnap: 'cursor'
                 },
                 yaxis: {
-                    title: '总资产（元）',
+                    title: { text: '💰 资产（元）', font: { size: 12 } },
                     tickformat: ',.0f',
-                    gridcolor: '#f0f0f0'
+                    gridcolor: 'rgba(0,0,0,0.05)',
+                    tickfont: { size: 11 }
                 },
                 hovermode: 'x unified',
-                showlegend: true,
-                legend: {
-                    orientation: 'h',
-                    y: -0.2
+                hoverlabel: {
+                    font: { size: 12 },
+                    bgcolor: 'white',
+                    bordercolor: '#ddd'
                 },
                 plot_bgcolor: 'white',
                 paper_bgcolor: 'white',
+                legend: {
+                    orientation: 'h',
+                    y: -0.3,
+                    font: { size: 11 },
+                    xanchor: 'center',
+                    x: 0.5
+                },
                 margin: { 
                     l: 60, 
-                    r: 30, 
-                    t: 50, 
-                    b: 80 
-                }
+                    r: 20, 
+                    t: 40, 
+                    b: 60 
+                },
+                showlegend: true,
+                autosize: true
             };
             
             const config = {
                 responsive: true,
                 displayModeBar: true,
                 displaylogo: false,
+                modeBarButtonsToRemove: ['lasso2d', 'select2d', 'toggleSpikelines'],
                 scrollZoom: true
             };
             
-            Plotly.newPlot('chart', traces, layout, config)
-                .then(function() {
-                    console.log('图表渲染成功');
-                })
-                .catch(function(error) {
-                    showError('图表渲染失败: ' + error.message);
-                });
+            Plotly.newPlot('chart', traces, layout, config);
         }
         
-        function renderStats() {
-            const container = document.getElementById('statsContainer');
-            let html = '';
+        function renderModelCards() {
+            if (typeof modelSummaryData === 'undefined') return;
             
-            for (const modelName in modelAssetsData) {
-                const data = modelAssetsData[modelName];
-                if (data.length === 0) continue;
+            const container = document.getElementById('modelsContainer');
+            let cardsHTML = '';
+            
+            for (const [modelName, data] of Object.entries(modelSummaryData)) {
+                const color = colors[modelName] || '#666';
+                const shortName = getShortName(modelName);
+                const change = data.change_pct;
+                const changeClass = change >= 0 ? 'change-up' : 'change-down';
+                const changeIcon = change >= 0 ? '↗' : '↘';
+                const changeText = change >= 0 ? `+${change.toFixed(1)}%` : `${change.toFixed(1)}%`;
                 
-                const values = data.map(item => item[1]);
-                const firstValue = values[0];
-                const lastValue = values[values.length - 1];
-                const changePercent = ((lastValue - firstValue) / firstValue * 100);
-                const changeClass = changePercent >= 0 ? 'positive' : 'negative';
-                const changeSign = changePercent >= 0 ? '+' : '';
-                
-                html += `
-                    <div class="stat-card">
-                        <h3>${modelName}</h3>
-                        <div class="stat-value">¥${lastValue.toLocaleString('zh-CN')}</div>
-                        <div class="stat-change ${changeClass}">
-                            ${changeSign}${changePercent.toFixed(2)}%
+                cardsHTML += `
+                    <div class="model-card">
+                        <div class="model-header">
+                            <div class="model-name">${modelName}</div>
+                            <div class="model-short">${shortName}</div>
+                        </div>
+                        <div class="model-value" style="color: ${color}">
+                            ¥${data.current.toLocaleString('zh-CN', {maximumFractionDigits: 0})}
+                        </div>
+                        <div class="model-change ${changeClass}">
+                            <span class="change-icon">${changeIcon}</span>
+                            <span>${changeText}</span>
                         </div>
                     </div>
                 `;
             }
             
-            container.innerHTML = html;
+            container.innerHTML = cardsHTML || '<div style="grid-column:1/-1;text-align:center;padding:20px;color:#718096">暂无模型数据</div>';
         }
         
-        function updateTimeDisplay() {
-            const now = new Date();
-            document.getElementById('updateTime').textContent = 
-                now.toLocaleString('zh-CN', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit'
-                });
+        function getShortName(fullName) {
+            const shortNames = {
+                'deepseek-v3': 'DS',
+                'qwen-72b': 'QW',
+                'gpt-5': 'GPT',
+                'gemini-3-pro': 'GM',
+                'llama-3.1-405b': 'LL'
+            };
+            return shortNames[fullName] || fullName.substring(0, 3).toUpperCase();
         }
         
-        // 处理窗口大小变化
+        function updateLatestValue() {
+            if (typeof modelAssetsData === 'undefined') return;
+            
+            let latestValues = [];
+            for (const [modelName, data] of Object.entries(modelAssetsData)) {
+                if (data && data.length > 0) {
+                    latestValues.push(data[data.length - 1][1]);
+                }
+            }
+            
+            if (latestValues.length > 0) {
+                const avgValue = latestValues.reduce((a, b) => a + b, 0) / latestValues.length;
+                document.getElementById('latestValue').textContent = 
+                    Math.round(avgValue).toLocaleString('zh-CN');
+            }
+        }
+        
+        function startLiveUpdates() {
+            function updateTime() {
+                const now = new Date();
+                document.getElementById('currentTime').textContent = 
+                    now.toLocaleString('zh-CN', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit'
+                    });
+            }
+            
+            updateTime();
+            setInterval(updateTime, 1000);
+        }
+        
         window.addEventListener('resize', function() {
-            if (typeof Plotly !== 'undefined') {
-                Plotly.Plots.resize(document.getElementById('chart'));
+            if (chartInstance) {
+                Plotly.Plots.resize(chartInstance);
             }
         });
-        
-        // 每10秒检查一次数据更新（可选）
-        // setInterval(updateTimeDisplay, 10000);
     </script>
 </body>
 </html>
