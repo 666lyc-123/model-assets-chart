@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>大模型交易分析 - 移动端</title>
+    <title>大模型交易分析</title>
     <style>
         :root {
             --primary: #4f46e5;
@@ -44,11 +44,6 @@
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-        }
-        
-        .header p {
-            font-size: 0.9rem;
-            color: #64748b;
         }
         
         .cards-container {
@@ -108,37 +103,6 @@
             color: var(--primary);
         }
         
-        .card-description {
-            font-size: 0.85rem;
-            color: #64748b;
-            line-height: 1.5;
-            margin-bottom: 16px;
-        }
-        
-        .card-tags {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        
-        .tag {
-            background: #e0e7ff;
-            color: var(--primary);
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-        
-        .footer {
-            text-align: center;
-            padding-top: 20px;
-            font-size: 0.8rem;
-            color: #64748b;
-            border-top: 1px solid #e2e8f0;
-            margin-top: 20px;
-        }
-        
         @media (max-width: 375px) {
             .card-icon {
                 width: 36px;
@@ -156,72 +120,36 @@
     <div class="container">
         <div class="header">
             <h1>📊 大模型交易分析</h1>
-            <p>移动端优化版本 | 实时数据监控</p>
         </div>
         
         <div class="cards-container">
             <a href="pattern1/index.html" class="pattern-card">
                 <div class="card-header">
                     <div class="card-icon">📈</div>
-                    <div class="card-title">纯数据分析</div>
+                    <div class="card-title">模式1-纯数据</div>
                     <div class="card-arrow">→</div>
-                </div>
-                <div class="card-description">
-                    基于历史数据和统计模型的交易策略，专注于数据驱动决策。
-                </div>
-                <div class="card-tags">
-                    <span class="tag">5个模型</span>
-                    <span class="tag">移动优化</span>
-                    <span class="tag">纯数据</span>
                 </div>
             </a>
             
             <a href="pattern2/index.html" class="pattern-card">
                 <div class="card-header">
                     <div class="card-icon">⚙️</div>
-                    <div class="card-title">数据+技术</div>
+                    <div class="card-title">模式2-数据+技术</div>
                     <div class="card-arrow">→</div>
-                </div>
-                <div class="card-description">
-                    结合技术指标与数据分析的交易策略，双重验证提高准确性。
-                </div>
-                <div class="card-tags">
-                    <span class="tag">5个模型</span>
-                    <span class="tag">移动优化</span>
-                    <span class="tag">技术指标</span>
                 </div>
             </a>
             
             <a href="pattern3/index.html" class="pattern-card">
                 <div class="card-header">
                     <div class="card-icon">📰</div>
-                    <div class="card-title">数据+新闻</div>
+                    <div class="card-title">模式3-数据+新闻</div>
                     <div class="card-arrow">→</div>
                 </div>
-                <div class="card-description">
-                    整合新闻情感分析与数据的交易策略，捕捉市场情绪变化。
-                </div>
-                <div class="card-tags">
-                    <span class="tag">5个模型</span>
-                    <span class="tag">移动优化</span>
-                    <span class="tag">情感分析</span>
-                </div>
             </a>
-        </div>
-        
-        <div class="footer">
-            <div>© 2024 大模型交易比赛</div>
-            <div style="margin-top: 8px; font-size: 0.75rem; opacity: 0.8;">
-                专为移动设备优化 | 建议横屏查看图表效果更佳
-            </div>
         </div>
     </div>
     
     <script>
-        // 简单的设备检测
-        const isMobile = window.innerWidth <= 768;
-        console.log(`📱 移动端主页面加载，设备检测: ${isMobile ? '移动端' : '桌面端'}`);
-        
         // 添加卡片点击效果
         document.querySelectorAll('.pattern-card').forEach(card => {
             card.addEventListener('click', function(e) {

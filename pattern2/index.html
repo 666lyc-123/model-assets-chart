@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>模式2-数据+技术 - 移动端优化</title>
+    <title>模式2-数据+技术</title>
     <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
     <style>
         :root {
@@ -60,7 +60,7 @@
             padding: 12px;
         }
         
-        /* 紧凑头部 */
+        /* 简化头部 */
         .compact-header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
@@ -75,12 +75,6 @@
             font-size: 1.2rem;
             font-weight: 700;
             margin-bottom: 6px;
-        }
-        
-        .compact-header .subtitle {
-            font-size: 0.8rem;
-            opacity: 0.9;
-            margin-bottom: 8px;
         }
         
         .time-display {
@@ -191,14 +185,7 @@
             border-radius: 50%;
         }
         
-        .model-short {
-            background: #e2e8f0;
-            color: #475569;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 700;
-        }
+        /* 移除了天数样式 */
         
         .model-value {
             font-size: 1.3rem;
@@ -227,59 +214,6 @@
         
         .change-icon {
             font-size: 0.9rem;
-        }
-        
-        /* 数据统计 */
-        .data-section {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 16px;
-            margin-bottom: 12px;
-            box-shadow: var(--shadow);
-        }
-        
-        .data-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-        
-        .data-card {
-            background: #f8fafc;
-            padding: 12px;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid #e2e8f0;
-        }
-        
-        .data-label {
-            font-size: 0.75rem;
-            color: #64748b;
-            margin-bottom: 6px;
-        }
-        
-        .data-value {
-            font-size: 1rem;
-            font-weight: 800;
-            color: var(--dark);
-        }
-        
-        /* 页脚 */
-        .compact-footer {
-            text-align: center;
-            padding: 12px;
-            color: #64748b;
-            font-size: 0.75rem;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 8px;
-            margin-top: 8px;
-        }
-        
-        /* 响应式调整 */
-        @media (min-width: 768px) {
-            .models-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
         
         /* 工具类 */
@@ -316,8 +250,7 @@
     <div class="app-container">
         <div class="compact-header">
             <h1>模式2-数据+技术</h1>
-            <div class="subtitle">技术指标结合策略 - 移动端优化</div>
-            <div class="time-display" id="currentTime">2026-01-19 20:40:32</div>
+            <div class="time-display" id="currentTime">2026-01-19 20:42:26</div>
         </div>
         
         <div class="chart-section">
@@ -329,38 +262,9 @@
         </div>
         
         <div class="models-grid" id="modelsContainer"></div>
-        
-        <div class="data-section">
-            <div class="section-title">📊 数据统计</div>
-            <div class="data-grid">
-                <div class="data-card">
-                    <div class="data-label">时间跨度</div>
-                    <div class="data-value" id="daysCount">-- 天</div>
-                </div>
-                <div class="data-card">
-                    <div class="data-label">活跃模型</div>
-                    <div class="data-value" id="modelsCount">5 个</div>
-                </div>
-                <div class="data-card">
-                    <div class="data-label">最高资产</div>
-                    <div class="data-value" id="maxValue">--</div>
-                </div>
-                <div class="data-card">
-                    <div class="data-label">平均资产</div>
-                    <div class="data-value" id="avgValue">--</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="compact-footer">
-            <div>数据来源：内部统计系统 | 更新时间：2026-01-19 20:40:32</div>
-            <div style="margin-top: 4px; font-size: 0.7rem; opacity: 0.8;">
-                专为移动端优化 | 建议横屏查看更佳
-            </div>
-        </div>
     </div>
 
-    <script src="./assets_data.js?v=202601192040"></script>
+    <script src="./assets_data.js?v=202601192042"></script>
     <script>
         // 检测设备类型和屏幕大小
         const isMobile = window.innerWidth <= 768;
@@ -418,9 +322,6 @@
             // 渲染模型卡片
             renderModelCards();
             
-            // 更新统计数据
-            updateStatistics();
-            
             // 启动定时更新
             startTimeUpdates();
             
@@ -460,7 +361,7 @@
                     y: y,
                     mode: 'lines+markers',  // 为移动端保留标记点，便于触摸
                     type: 'scatter',
-                    name: modelName,
+                    name: getModelShortName(modelName),
                     line: { 
                         color: color,
                         width: deviceConfig.lineWidth,
@@ -485,7 +386,7 @@
                     legendItem.className = 'legend-item';
                     legendItem.innerHTML = `
                         <div class="legend-color" style="background: ${color}"></div>
-                        <span>${modelName}</span>
+                        <span>${getModelShortName(modelName)}</span>
                     `;
                     legendContainer.appendChild(legendItem);
                 }
@@ -498,9 +399,6 @@
             }
             
             console.log(`✅ 准备渲染 ${traces.length} 条轨迹`);
-            
-            // 更新模型数量显示
-            document.getElementById('modelsCount').textContent = activeModels + ' 个';
             
             // 移动端优化的布局
             const layout = {
@@ -527,7 +425,7 @@
                 },
                 yaxis: {
                     title: { text: '', font: { size: 0 } },
-                    tickformat: isMobile ? ',.0s' : ',.0f',
+                    tickformat: ',.0f',  // 显示完整数字，不使用科学计数法
                     tickfont: { 
                         size: deviceConfig.fontSize,
                         color: '#64748b'
@@ -541,8 +439,8 @@
                     zeroline: false,
                     showgrid: true,
                     automargin: true,
-                    // 科学计数法显示大数字
-                    exponentformat: isMobile ? 'SI' : 'none'
+                    // 禁用科学计数法
+                    exponentformat: 'none'
                 },
                 hovermode: 'x unified',
                 hoverlabel: {
@@ -566,7 +464,7 @@
                     visible: deviceConfig.showLegend
                 },
                 margin: { 
-                    l: 45,
+                    l: 60,  // 增加左边距以适应完整数字
                     r: 20,
                     t: 10,
                     b: 45
@@ -627,13 +525,14 @@
             
             for (const [modelName, data] of Object.entries(modelSummaryData)) {
                 const color = colors[modelName] || '#666';
-                const shortName = getShortName(modelName);
+                const shortName = getModelShortName(modelName);
                 const change = data.change_pct;
                 const changeClass = change >= 0 ? 'change-up' : 'change-down';
                 const changeIcon = change >= 0 ? '↗' : '↘';
                 const changeText = change >= 0 ? `+${change.toFixed(1)}%` : `${change.toFixed(1)}%`;
-                const formattedValue = formatNumberForMobile(data.current);
+                const formattedValue = formatNumberWithCommas(data.current);  // 使用新的格式化函数
                 
+                // 移除天数显示，只显示模型名称、总权益和涨跌幅
                 cardsHTML += `
                     <div class="model-card">
                         <div class="model-header">
@@ -641,7 +540,6 @@
                                 <div class="model-color-dot" style="background: ${color}"></div>
                                 ${shortName}
                             </div>
-                            <div class="model-short">${data.days}天</div>
                         </div>
                         <div class="model-value" style="color: ${color}">
                             ${formattedValue}
@@ -658,23 +556,15 @@
             console.log(`📊 渲染了 ${Object.keys(modelSummaryData).length} 个模型卡片`);
         }
         
-        // 移动端友好的数字格式化
-        function formatNumberForMobile(num) {
-            if (num >= 1000000) {
-                const millions = num / 1000000;
-                return '¥' + (millions >= 10 ? millions.toFixed(0) : millions.toFixed(1)) + 'M';
-            } else if (num >= 10000) {
-                const thousands = num / 1000;
-                return '¥' + (thousands >= 10 ? thousands.toFixed(0) : thousands.toFixed(1)) + 'K';
-            } else if (num >= 1000) {
-                return '¥' + (num / 1000).toFixed(1) + 'K';
-            } else {
-                return '¥' + Math.round(num).toLocaleString();
-            }
+        // 修改数字格式化函数，不使用M/K单位，显示完整数字
+        function formatNumberWithCommas(num) {
+            // 显示完整数字，添加千分位分隔符
+            // 例如：1000000 → "¥1,000,000"
+            return '¥' + Math.round(num).toLocaleString();
         }
         
         // 获取模型简称
-        function getShortName(fullName) {
+        function getModelShortName(fullName) {
             const shortNames = {
                 'deepseek-v3': 'DeepSeek',
                 'qwen-72b': 'Qwen',
@@ -683,43 +573,6 @@
                 'llama-3.1-405b': 'Llama'
             };
             return shortNames[fullName] || fullName;
-        }
-        
-        // 更新统计信息
-        function updateStatistics() {
-            if (typeof modelAssetsData === 'undefined') return;
-            
-            let daysSet = new Set();
-            let maxValue = 0;
-            let allValues = [];
-            let totalValues = 0;
-            let valueCount = 0;
-            
-            for (const [modelName, data] of Object.entries(modelAssetsData)) {
-                if (data && data.length > 0) {
-                    data.forEach(item => {
-                        daysSet.add(item[0]);
-                        if (item[1] > maxValue) maxValue = item[1];
-                        allValues.push(item[1]);
-                        totalValues += item[1];
-                        valueCount++;
-                    });
-                }
-            }
-            
-            // 更新显示
-            if (daysSet.size > 0) {
-                document.getElementById('daysCount').textContent = daysSet.size + ' 天';
-            }
-            
-            if (maxValue > 0) {
-                document.getElementById('maxValue').textContent = formatNumberForMobile(maxValue);
-            }
-            
-            if (valueCount > 0) {
-                const avgValue = totalValues / valueCount;
-                document.getElementById('avgValue').textContent = formatNumberForMobile(avgValue);
-            }
         }
         
         // 启动时间更新
