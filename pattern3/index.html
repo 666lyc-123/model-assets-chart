@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>模式3-数据+新闻 - 移动端</title>
+    <title>模式3-数据+新闻 - 移动端优化</title>
     <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
     <style>
         :root {
-            --primary: #667eea;
-            --primary-dark: #764ba2;
-            --secondary: #4c51bf;
-            --success: #48bb78;
-            --danger: #f56565;
-            --warning: #ed8936;
-            --light: #f7fafc;
-            --dark: #2d3748;
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #7c3aed;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --light: #f8fafc;
+            --dark: #1e293b;
             --card-bg: #ffffff;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
             --border-radius: 12px;
         }
         
@@ -28,150 +29,183 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', sans-serif;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
             min-height: 100vh;
             color: var(--dark);
-            line-height: 1.5;
-            padding: 16px;
+            line-height: 1.4;
+            padding: 0;
+        }
+        
+        /* 针对小屏手机的优化 */
+        @media (max-width: 320px) {
+            body { font-size: 12px; }
+            .app-container { padding: 8px; }
+            .card { padding: 10px; }
+        }
+        
+        /* 针对中等屏幕手机的优化 */
+        @media (min-width: 321px) and (max-width: 375px) {
+            body { font-size: 13px; }
+        }
+        
+        /* 针对大屏手机的优化 */
+        @media (min-width: 376px) and (max-width: 425px) {
+            body { font-size: 14px; }
         }
         
         .app-container {
-            max-width: 480px;
+            max-width: 100%;
             margin: 0 auto;
-            width: 100%;
+            padding: 12px;
         }
         
-        .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+        /* 紧凑头部 */
+        .compact-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
             border-radius: var(--border-radius);
-            padding: 20px;
-            margin-bottom: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
             text-align: center;
             box-shadow: var(--shadow);
         }
         
-        .header h1 {
-            font-size: 20px;
+        .compact-header h1 {
+            font-size: 1.2rem;
             font-weight: 700;
-            color: var(--dark);
             margin-bottom: 6px;
         }
         
-        .header .subtitle {
-            font-size: 14px;
-            color: #718096;
-            margin-bottom: 12px;
+        .compact-header .subtitle {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            margin-bottom: 8px;
         }
         
-        .time-badge {
+        .time-display {
             display: inline-block;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background: rgba(255, 255, 255, 0.2);
             color: white;
             padding: 6px 12px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 0.75rem;
             font-weight: 600;
+            backdrop-filter: blur(10px);
         }
         
+        /* 图表容器 */
         .chart-section {
             background: var(--card-bg);
             border-radius: var(--border-radius);
-            padding: 20px;
-            margin-bottom: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
             box-shadow: var(--shadow);
+            overflow: hidden;
         }
         
         .section-title {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-        }
-        
-        .section-title h2 {
-            font-size: 16px;
+            font-size: 0.95rem;
             font-weight: 600;
             color: var(--dark);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .chart-container {
             width: 100%;
-            height: 350px;
-            margin-bottom: 16px;
+            height: 280px;  /* 适合手机屏幕的高度 */
         }
         
-        .chart-legend {
+        /* 简化图例 */
+        .compact-legend {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
             justify-content: center;
             margin-top: 12px;
+            padding: 8px 0;
         }
         
         .legend-item {
             display: flex;
             align-items: center;
             gap: 6px;
-            font-size: 12px;
-            color: #4a5568;
+            font-size: 0.75rem;
+            color: #475569;
+            padding: 4px 8px;
+            background: #f1f5f9;
+            border-radius: 6px;
         }
         
         .legend-color {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
         }
         
+        /* 模型卡片 - 单列布局 */
         .models-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-        
-        @media (min-width: 400px) {
-            .models-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 12px;
         }
         
         .model-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
-            backdrop-filter: blur(5px);
-            border-radius: var(--border-radius);
-            padding: 16px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 14px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s;
+        }
+        
+        .model-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
         }
         
         .model-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
         
         .model-name {
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 0.9rem;
+            font-weight: 700;
             color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .model-color-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
         }
         
         .model-short {
-            background: var(--light);
-            color: var(--dark);
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 12px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
             font-weight: 700;
         }
         
         .model-value {
-            font-size: 24px;
+            font-size: 1.3rem;
             font-weight: 800;
-            margin-bottom: 8px;
             text-align: center;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
         }
         
         .model-change {
@@ -179,7 +213,7 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            font-size: 12px;
+            font-size: 0.8rem;
             font-weight: 600;
         }
         
@@ -192,321 +226,401 @@
         }
         
         .change-icon {
-            font-size: 14px;
+            font-size: 0.9rem;
         }
         
-        .transaction-section {
+        /* 数据统计 */
+        .data-section {
             background: var(--card-bg);
             border-radius: var(--border-radius);
-            padding: 20px;
-            margin-bottom: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
             box-shadow: var(--shadow);
         }
         
-        .transaction-levels {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .level-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px;
-            background: linear-gradient(90deg, #edf2f7 0%, #e2e8f0 100%);
-            border-radius: 8px;
-        }
-        
-        .level-info {
-            flex: 1;
-        }
-        
-        .level-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 4px;
-        }
-        
-        .level-bar {
-            width: 60%;
-            height: 8px;
-            background: linear-gradient(90deg, #cbd5e0 0%, #a0aec0 100%);
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 4px 0;
-        }
-        
-        .level-fill {
-            height: 100%;
-            border-radius: 4px;
-        }
-        
-        .level-value {
-            font-size: 12px;
-            color: #718096;
-        }
-        
-        .time-section {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: var(--shadow);
-        }
-        
-        .time-comparison {
+        .data-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            gap: 10px;
         }
         
-        .time-card {
-            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-            padding: 16px;
+        .data-card {
+            background: #f8fafc;
+            padding: 12px;
             border-radius: 8px;
             text-align: center;
+            border: 1px solid #e2e8f0;
         }
         
-        .time-label {
-            font-size: 12px;
-            color: #718096;
-            margin-bottom: 8px;
+        .data-label {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-bottom: 6px;
         }
         
-        .time-value {
-            font-size: 18px;
-            font-weight: 700;
+        .data-value {
+            font-size: 1rem;
+            font-weight: 800;
             color: var(--dark);
         }
         
-        .footer {
+        /* 页脚 */
+        .compact-footer {
             text-align: center;
-            padding: 16px;
-            color: white;
-            font-size: 12px;
-            opacity: 0.9;
+            padding: 12px;
+            color: #64748b;
+            font-size: 0.75rem;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            margin-top: 8px;
         }
         
-        .github-link {
-            color: white;
-            text-decoration: underline;
-            margin-top: 8px;
-            display: inline-block;
+        /* 响应式调整 */
+        @media (min-width: 768px) {
+            .models-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* 工具类 */
+        .hidden {
+            display: none !important;
+        }
+        
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        
+        .loading::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            margin-left: 8px;
+            border: 2px solid #e2e8f0;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
     <div class="app-container">
-        <div class="header">
+        <div class="compact-header">
             <h1>模式3-数据+新闻</h1>
-            <div class="subtitle">新闻情感分析策略</div>
-            <div class="time-badge" id="currentTime">2026-01-16 23:56:31</div>
+            <div class="subtitle">新闻情感分析策略 - 移动端优化</div>
+            <div class="time-display" id="currentTime">2026-01-19 16:42:16</div>
         </div>
         
         <div class="chart-section">
-            <div class="section-title">
-                <h2>📈 资产趋势对比</h2>
+            <div class="section-title">📈 资产趋势对比</div>
+            <div id="chart" class="chart-container">
+                <div class="loading">正在加载图表...</div>
             </div>
-            <div id="chart" class="chart-container"></div>
-            <div id="chartLegend" class="chart-legend"></div>
+            <div id="chartLegend" class="compact-legend"></div>
         </div>
         
         <div class="models-grid" id="modelsContainer"></div>
         
-        <div class="transaction-section">
-            <div class="section-title">
-                <h2>💰 成交额分布</h2>
-            </div>
-            <div class="transaction-levels">
-                <div class="level-item">
-                    <div class="level-info">
-                        <div class="level-title">基础层级</div>
-                        <div class="level-bar">
-                            <div class="level-fill" style="width: 20%; background: linear-gradient(90deg, #48bb78, #38a169);"></div>
-                        </div>
-                    </div>
-                    <div class="level-value">20,000</div>
+        <div class="data-section">
+            <div class="section-title">📊 数据统计</div>
+            <div class="data-grid">
+                <div class="data-card">
+                    <div class="data-label">时间跨度</div>
+                    <div class="data-value" id="daysCount">-- 天</div>
                 </div>
-                <div class="level-item">
-                    <div class="level-info">
-                        <div class="level-title">进阶层级</div>
-                        <div class="level-bar">
-                            <div class="level-fill" style="width: 50%; background: linear-gradient(90deg, #4299e1, #3182ce);"></div>
-                        </div>
-                    </div>
-                    <div class="level-value">10,000</div>
+                <div class="data-card">
+                    <div class="data-label">活跃模型</div>
+                    <div class="data-value" id="modelsCount">5 个</div>
                 </div>
-                <div class="level-item">
-                    <div class="level-info">
-                        <div class="level-title">高级层级</div>
-                        <div class="level-bar">
-                            <div class="level-fill" style="width: 5%; background: linear-gradient(90deg, #ed8936, #dd6b20);"></div>
-                        </div>
-                    </div>
-                    <div class="level-value">1,000,000</div>
+                <div class="data-card">
+                    <div class="data-label">最高资产</div>
+                    <div class="data-value" id="maxValue">--</div>
+                </div>
+                <div class="data-card">
+                    <div class="data-label">平均资产</div>
+                    <div class="data-value" id="avgValue">--</div>
                 </div>
             </div>
         </div>
         
-        <div class="time-section">
-            <div class="section-title">
-                <h2>📅 时间节点对比</h2>
+        <div class="compact-footer">
+            <div>数据来源：内部统计系统 | 更新时间：2026-01-19 16:42:16</div>
+            <div style="margin-top: 4px; font-size: 0.7rem; opacity: 0.8;">
+                专为移动端优化 | 建议横屏查看更佳
             </div>
-            <div class="time-comparison">
-                <div class="time-card">
-                    <div class="time-label">Dec 2025</div>
-                    <div class="time-value">28,026</div>
-                </div>
-                <div class="time-card">
-                    <div class="time-label">Jan 4</div>
-                    <div class="time-value" id="latestValue">--</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            <div>数据来源：内部统计系统</div>
-            <div>更新时间实时同步</div>
-            <a href="https://github.com/666lyc-123/model-assets-chart" 
-               class="github-link" target="_blank">
-                GitHub仓库
-            </a>
         </div>
     </div>
 
-    <script src="./assets_data.js"></script>
+    <script src="./assets_data.js?v=202601191642"></script>
     <script>
-        const colors = {"deepseek-v3": "#2196f3", "qwen-72b": "#ff9800", "gpt-5": "#e91e63", "gemini-3-pro": "#4caf50", "llama-3.1-405b": "#9c27b0"};
-        let chartInstance = null;
+        // 检测设备类型和屏幕大小
+        const isMobile = window.innerWidth <= 768;
+        const isSmallMobile = window.innerWidth <= 375;
         
-        document.addEventListener('DOMContentLoaded', function() {
+        console.log(`📱 设备检测: 宽度=${window.innerWidth}px, 移动端=${isMobile}, 小屏=${isSmallMobile}`);
+        
+        const colors = {"deepseek-v3": "#2196f3", "qwen-72b": "#ff9800", "gpt-5": "#e91e63", "gemini-3-pro": "#4caf50", "llama-3.1-405b": "#9c27b0"};
+        
+        // 设备适配的配置
+        const getDeviceConfig = () => {
+            if (isSmallMobile) {
+                return {
+                    chartHeight: 250,
+                    fontSize: 9,
+                    lineWidth: 1.8,
+                    legendFontSize: 10,
+                    showLegend: false  // 小屏隐藏图例，用卡片代替
+                };
+            } else if (isMobile) {
+                return {
+                    chartHeight: 280,
+                    fontSize: 10,
+                    lineWidth: 2,
+                    legendFontSize: 11,
+                    showLegend: true
+                };
+            } else {
+                return {
+                    chartHeight: 320,
+                    fontSize: 12,
+                    lineWidth: 2.2,
+                    legendFontSize: 12,
+                    showLegend: true
+                };
+            }
+        };
+        
+        // 主初始化函数
+        async function initMobileDashboard() {
+            console.log('🚀 初始化移动端仪表板...');
+            
+            // 检查数据是否加载
             if (typeof modelAssetsData === 'undefined') {
-                console.error('数据文件加载失败');
+                console.error('❌ 数据文件加载失败');
+                showErrorMessage('数据加载失败，请刷新页面');
                 return;
             }
             
-            initDashboard();
-        });
-        
-        function initDashboard() {
-            renderChart();
+            console.log(`✅ 数据加载成功，找到 ${Object.keys(modelAssetsData).length} 个模型数据`);
+            
+            // 渲染图表
+            await renderMobileChart();
+            
+            // 渲染模型卡片
             renderModelCards();
-            updateLatestValue();
-            startLiveUpdates();
+            
+            // 更新统计数据
+            updateStatistics();
+            
+            // 启动定时更新
+            startTimeUpdates();
+            
+            console.log('🎉 移动端仪表板初始化完成');
         }
         
-        function renderChart() {
+        // 渲染移动端优化图表
+        async function renderMobileChart() {
+            console.log('📊 渲染移动端图表...');
+            
             const traces = [];
-            const legendItems = [];
+            const deviceConfig = getDeviceConfig();
+            let activeModels = 0;
+            
+            // 清空图例区域
+            const legendContainer = document.getElementById('chartLegend');
+            if (deviceConfig.showLegend) {
+                legendContainer.innerHTML = '';
+            } else {
+                legendContainer.classList.add('hidden');
+            }
             
             for (const [modelName, data] of Object.entries(modelAssetsData)) {
-                if (!data || data.length === 0) continue;
+                if (!data || data.length === 0) {
+                    console.log(`⚠️  模型 ${modelName} 无数据，跳过`);
+                    continue;
+                }
                 
+                activeModels++;
                 const x = data.map(item => item[0]);
                 const y = data.map(item => item[1]);
                 const color = colors[modelName] || '#666';
                 
+                // 创建轨迹
                 traces.push({
                     x: x,
                     y: y,
-                    mode: 'lines+markers',
+                    mode: 'lines+markers',  // 为移动端保留标记点，便于触摸
+                    type: 'scatter',
                     name: modelName,
                     line: { 
                         color: color,
-                        width: 3,
-                        shape: 'spline'
+                        width: deviceConfig.lineWidth,
+                        shape: 'spline',
+                        smoothing: 0.3
                     },
                     marker: {
-                        size: 6,
+                        size: isMobile ? 4 : 5,
                         color: color,
-                        line: {
-                            width: 1,
-                            color: 'white'
-                        }
+                        opacity: 0.7
                     },
+                    hoverinfo: 'x+y+name',
                     hovertemplate: 
-                        '<b>日期：</b>%{x}<br>' +
-                        '<b>模型：</b>' + modelName + '<br>' +
-                        '<b>资产：</b>¥%{y:,.0f}<br>' +
+                        '<b>%{x}</b><br>' +
+                        '<span style="color:%{line.color}">●</span> <b>%{data.name}</b>: ¥%{y:,.0f}<br>' +
                         '<extra></extra>'
                 });
                 
-                legendItems.push(`
-                    <div class="legend-item">
+                // 如果显示图例，则添加图例项
+                if (deviceConfig.showLegend) {
+                    const legendItem = document.createElement('div');
+                    legendItem.className = 'legend-item';
+                    legendItem.innerHTML = `
                         <div class="legend-color" style="background: ${color}"></div>
                         <span>${modelName}</span>
-                    </div>
-                `);
+                    `;
+                    legendContainer.appendChild(legendItem);
+                }
             }
             
             if (traces.length === 0) {
-                document.getElementById('chart').innerHTML = '<div style="text-align:center;padding:40px;color:#718096">暂无数据</div>';
+                console.warn('⚠️  没有可渲染的数据');
+                showErrorMessage('暂无有效数据');
                 return;
             }
             
-            document.getElementById('chartLegend').innerHTML = legendItems.join('');
+            console.log(`✅ 准备渲染 ${traces.length} 条轨迹`);
             
+            // 更新模型数量显示
+            document.getElementById('modelsCount').textContent = activeModels + ' 个';
+            
+            // 移动端优化的布局
             const layout = {
-                title: {
-                    text: '资产趋势对比',
-                    font: { size: 14 },
-                    x: 0.5
-                },
+                title: { text: '', font: { size: 0 } },
                 xaxis: {
-                    title: { text: '📅 日期', font: { size: 12 } },
-                    gridcolor: 'rgba(0,0,0,0.05)',
-                    tickfont: { size: 11 },
+                    title: { text: '', font: { size: 0 } },
+                    tickfont: { 
+                        size: deviceConfig.fontSize,
+                        color: '#64748b'
+                    },
                     type: 'date',
-                    showspikes: true,
-                    spikemode: 'across',
-                    spikesnap: 'cursor'
+                    tickformat: '%m/%d',
+                    tickmode: 'auto',
+                    nticks: isMobile ? 4 : 6,
+                    gridcolor: 'rgba(0,0,0,0.05)',
+                    gridwidth: 0.5,
+                    showline: false,
+                    linewidth: 0,
+                    zeroline: false,
+                    showgrid: true,
+                    automargin: true,
+                    // 移动端适配：旋转标签避免重叠
+                    tickangle: isSmallMobile ? -45 : 0
                 },
                 yaxis: {
-                    title: { text: '💰 资产（元）', font: { size: 12 } },
-                    tickformat: ',.0f',
+                    title: { text: '', font: { size: 0 } },
+                    tickformat: isMobile ? ',.0s' : ',.0f',
+                    tickfont: { 
+                        size: deviceConfig.fontSize,
+                        color: '#64748b'
+                    },
                     gridcolor: 'rgba(0,0,0,0.05)',
-                    tickfont: { size: 11 }
+                    gridwidth: 0.5,
+                    tickmode: 'auto',
+                    nticks: isMobile ? 4 : 5,
+                    showline: false,
+                    linewidth: 0,
+                    zeroline: false,
+                    showgrid: true,
+                    automargin: true,
+                    // 科学计数法显示大数字
+                    exponentformat: isMobile ? 'SI' : 'none'
                 },
                 hovermode: 'x unified',
                 hoverlabel: {
-                    font: { size: 12 },
-                    bgcolor: 'white',
-                    bordercolor: '#ddd'
+                    font: { size: deviceConfig.fontSize },
+                    bgcolor: 'rgba(255, 255, 255, 0.95)',
+                    bordercolor: '#cbd5e1',
+                    align: 'left'
                 },
                 plot_bgcolor: 'white',
                 paper_bgcolor: 'white',
                 legend: {
                     orientation: 'h',
-                    y: -0.3,
-                    font: { size: 11 },
+                    y: -0.25,
+                    font: { size: deviceConfig.legendFontSize },
                     xanchor: 'center',
-                    x: 0.5
+                    x: 0.5,
+                    bgcolor: 'rgba(255,255,255,0.8)',
+                    bordercolor: '#e2e8f0',
+                    borderwidth: 0.5,
+                    // 根据设备决定是否显示
+                    visible: deviceConfig.showLegend
                 },
                 margin: { 
-                    l: 60, 
-                    r: 20, 
-                    t: 40, 
-                    b: 60 
+                    l: 45,
+                    r: 20,
+                    t: 10,
+                    b: 45
                 },
-                showlegend: true,
-                autosize: true
+                showlegend: deviceConfig.showLegend,
+                autosize: true,
+                dragmode: false,  // 移动端禁用拖拽
+                scrollZoom: false  // 移动端禁用滚轮缩放
             };
             
             const config = {
                 responsive: true,
-                displayModeBar: true,
+                displayModeBar: true,  // 保留工具栏，但可以自定义
+                modeBarButtonsToRemove: ['lasso2d', 'select2d', 'autoScale2d'],
                 displaylogo: false,
-                modeBarButtonsToRemove: ['lasso2d', 'select2d', 'toggleSpikelines'],
-                scrollZoom: true
+                scrollZoom: false,
+                staticPlot: false
             };
             
-            Plotly.newPlot('chart', traces, layout, config);
+            try {
+                // 移除加载提示
+                const chartContainer = document.getElementById('chart');
+                chartContainer.innerHTML = '';
+                
+                // 使用Promise方式渲染
+                await Plotly.newPlot('chart', traces, layout, config);
+                console.log('✅ 图表渲染成功');
+                
+                // 添加图表面积触摸优化
+                optimizeChartForTouch();
+                
+            } catch(error) {
+                console.error('❌ 图表渲染失败:', error);
+                showErrorMessage('图表渲染失败: ' + error.message);
+            }
         }
         
+        // 优化图表面积触摸体验
+        function optimizeChartForTouch() {
+            const chartElement = document.getElementById('chart');
+            
+            // 为移动端添加触摸优化
+            if ('ontouchstart' in window) {
+                chartElement.style.touchAction = 'pan-y';
+                console.log('👆 已启用触摸优化');
+            }
+        }
+        
+        // 渲染模型卡片
         function renderModelCards() {
-            if (typeof modelSummaryData === 'undefined') return;
+            if (typeof modelSummaryData === 'undefined') {
+                console.warn('⚠️  无统计数据显示');
+                return;
+            }
             
             const container = document.getElementById('modelsContainer');
             let cardsHTML = '';
@@ -518,15 +632,19 @@
                 const changeClass = change >= 0 ? 'change-up' : 'change-down';
                 const changeIcon = change >= 0 ? '↗' : '↘';
                 const changeText = change >= 0 ? `+${change.toFixed(1)}%` : `${change.toFixed(1)}%`;
+                const formattedValue = formatNumberForMobile(data.current);
                 
                 cardsHTML += `
                     <div class="model-card">
                         <div class="model-header">
-                            <div class="model-name">${modelName}</div>
-                            <div class="model-short">${shortName}</div>
+                            <div class="model-name">
+                                <div class="model-color-dot" style="background: ${color}"></div>
+                                ${shortName}
+                            </div>
+                            <div class="model-short">${data.days}天</div>
                         </div>
                         <div class="model-value" style="color: ${color}">
-                            ¥${data.current.toLocaleString('zh-CN', {maximumFractionDigits: 0})}
+                            ${formattedValue}
                         </div>
                         <div class="model-change ${changeClass}">
                             <span class="change-icon">${changeIcon}</span>
@@ -536,38 +654,76 @@
                 `;
             }
             
-            container.innerHTML = cardsHTML || '<div style="grid-column:1/-1;text-align:center;padding:20px;color:#718096">暂无模型数据</div>';
+            container.innerHTML = cardsHTML || '<div class="loading" style="grid-column:1/-1;">暂无模型数据</div>';
+            console.log(`📊 渲染了 ${Object.keys(modelSummaryData).length} 个模型卡片`);
         }
         
+        // 移动端友好的数字格式化
+        function formatNumberForMobile(num) {
+            if (num >= 1000000) {
+                const millions = num / 1000000;
+                return '¥' + (millions >= 10 ? millions.toFixed(0) : millions.toFixed(1)) + 'M';
+            } else if (num >= 10000) {
+                const thousands = num / 1000;
+                return '¥' + (thousands >= 10 ? thousands.toFixed(0) : thousands.toFixed(1)) + 'K';
+            } else if (num >= 1000) {
+                return '¥' + (num / 1000).toFixed(1) + 'K';
+            } else {
+                return '¥' + Math.round(num).toLocaleString();
+            }
+        }
+        
+        // 获取模型简称
         function getShortName(fullName) {
             const shortNames = {
-                'deepseek-v3': 'DS',
-                'qwen-72b': 'QW',
-                'gpt-5': 'GPT',
-                'gemini-3-pro': 'GM',
-                'llama-3.1-405b': 'LL'
+                'deepseek-v3': 'DeepSeek',
+                'qwen-72b': 'Qwen',
+                'gpt-5': 'GPT-5',
+                'gemini-3-pro': 'Gemini',
+                'llama-3.1-405b': 'Llama'
             };
-            return shortNames[fullName] || fullName.substring(0, 3).toUpperCase();
+            return shortNames[fullName] || fullName;
         }
         
-        function updateLatestValue() {
+        // 更新统计信息
+        function updateStatistics() {
             if (typeof modelAssetsData === 'undefined') return;
             
-            let latestValues = [];
+            let daysSet = new Set();
+            let maxValue = 0;
+            let allValues = [];
+            let totalValues = 0;
+            let valueCount = 0;
+            
             for (const [modelName, data] of Object.entries(modelAssetsData)) {
                 if (data && data.length > 0) {
-                    latestValues.push(data[data.length - 1][1]);
+                    data.forEach(item => {
+                        daysSet.add(item[0]);
+                        if (item[1] > maxValue) maxValue = item[1];
+                        allValues.push(item[1]);
+                        totalValues += item[1];
+                        valueCount++;
+                    });
                 }
             }
             
-            if (latestValues.length > 0) {
-                const avgValue = latestValues.reduce((a, b) => a + b, 0) / latestValues.length;
-                document.getElementById('latestValue').textContent = 
-                    Math.round(avgValue).toLocaleString('zh-CN');
+            // 更新显示
+            if (daysSet.size > 0) {
+                document.getElementById('daysCount').textContent = daysSet.size + ' 天';
+            }
+            
+            if (maxValue > 0) {
+                document.getElementById('maxValue').textContent = formatNumberForMobile(maxValue);
+            }
+            
+            if (valueCount > 0) {
+                const avgValue = totalValues / valueCount;
+                document.getElementById('avgValue').textContent = formatNumberForMobile(avgValue);
             }
         }
         
-        function startLiveUpdates() {
+        // 启动时间更新
+        function startTimeUpdates() {
             function updateTime() {
                 const now = new Date();
                 document.getElementById('currentTime').textContent = 
@@ -585,11 +741,56 @@
             setInterval(updateTime, 1000);
         }
         
+        // 显示错误信息
+        function showErrorMessage(message) {
+            const chartContainer = document.getElementById('chart');
+            chartContainer.innerHTML = `
+                <div style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100%;
+                    color: #64748b;
+                    text-align: center;
+                    padding: 20px;
+                ">
+                    <div style="font-size: 24px; margin-bottom: 10px;">📊</div>
+                    <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">图表加载失败</div>
+                    <div style="font-size: 12px; opacity: 0.8;">${message}</div>
+                    <button onclick="window.location.reload()" style="
+                        margin-top: 16px;
+                        padding: 8px 16px;
+                        background: var(--primary);
+                        color: white;
+                        border: none;
+                        border-radius: 6px;
+                        font-size: 12px;
+                        cursor: pointer;
+                    ">
+                        刷新页面
+                    </button>
+                </div>
+            `;
+        }
+        
+        // 窗口大小变化时重新渲染
+        let resizeTimer;
         window.addEventListener('resize', function() {
-            if (chartInstance) {
-                Plotly.Plots.resize(chartInstance);
-            }
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(async function() {
+                console.log('🔄 窗口大小变化，重新渲染图表...');
+                await renderMobileChart();
+                
+                // 如果图表现已存在，重新调整大小
+                if (document.getElementById('chart').children.length > 0) {
+                    Plotly.Plots.resize(document.getElementById('chart'));
+                }
+            }, 250); // 250ms防抖
         });
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', initMobileDashboard);
     </script>
 </body>
 </html>

@@ -6,10 +6,9 @@
     <title>大模型交易分析 - 移动端</title>
     <style>
         :root {
-            --primary: #667eea;
-            --primary-dark: #764ba2;
-            --secondary: #4c51bf;
-            --card-bg: #ffffff;
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #7c3aed;
         }
         
         * {
@@ -20,9 +19,9 @@
         
         body {
             font-family: -apple-system, sans-serif;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             min-height: 100vh;
-            color: white;
+            color: #1e293b;
             padding: 16px;
         }
         
@@ -39,15 +38,17 @@
         }
         
         .header h1 {
-            font-size: 24px;
+            font-size: 1.5rem;
             font-weight: 800;
             margin-bottom: 8px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .header p {
-            font-size: 14px;
-            opacity: 0.95;
+            font-size: 0.9rem;
+            color: #64748b;
         }
         
         .cards-container {
@@ -58,21 +59,22 @@
         }
         
         .pattern-card {
-            background: rgba(255, 255, 255, 0.15);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
             backdrop-filter: blur(10px);
             border-radius: 16px;
             padding: 20px;
             text-decoration: none;
-            color: white;
+            color: inherit;
             display: block;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            transition: all 0.3s ease;
         }
         
         .pattern-card:hover {
-            background: rgba(255, 255, 255, 0.25);
             transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: var(--primary);
         }
         
         .card-header {
@@ -84,92 +86,77 @@
         
         .card-icon {
             font-size: 24px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
         }
         
         .card-title {
-            font-size: 18px;
+            font-size: 1.1rem;
             font-weight: 700;
             flex: 1;
+            color: #1e293b;
         }
         
         .card-arrow {
             font-size: 20px;
-            opacity: 0.8;
+            color: var(--primary);
         }
         
         .card-description {
-            font-size: 13px;
-            opacity: 0.9;
+            font-size: 0.85rem;
+            color: #64748b;
             line-height: 1.5;
             margin-bottom: 16px;
         }
         
-        .card-stats {
+        .card-tags {
             display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            opacity: 0.9;
+            gap: 8px;
+            flex-wrap: wrap;
         }
         
-        .stat-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .tag {
+            background: #e0e7ff;
+            color: var(--primary);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 600;
         }
-        
-        .stat-value {
-            font-weight: 700;
-            font-size: 14px;
-        }
-        
-        .stat-label {
-            margin-top: 4px;
-        }
-        
-        .update-info {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 16px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .update-info h3 {
-            font-size: 14px;
-            margin-bottom: 8px;
-            opacity: 0.9;
-        }
-        
-        .update-time {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }}
         
         .footer {
             text-align: center;
             padding-top: 20px;
-            font-size: 12px;
-            opacity: 0.8;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-        }}
+            font-size: 0.8rem;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 375px) {
+            .card-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 20px;
+            }
+            
+            .card-title {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>📊 大模型交易分析</h1>
-            <p>移动端优化 | 实时数据</p>
-        </div>
-        
-        <div class="update-info">
-            <h3>⏰ 更新时间</h3>
-            <div class="update-time" id="updateTime">
-                2026-01-16 23:56:31
-            </div>
-            <div style="font-size: 12px; opacity: 0.9;">自动刷新 | 实时同步</div>
+            <p>移动端优化版本 | 实时数据监控</p>
         </div>
         
         <div class="cards-container">
@@ -180,21 +167,12 @@
                     <div class="card-arrow">→</div>
                 </div>
                 <div class="card-description">
-                    基于历史数据和统计模型的交易策略
+                    基于历史数据和统计模型的交易策略，专注于数据驱动决策。
                 </div>
-                <div class="card-stats">
-                    <div class="stat-item">
-                        <div class="stat-value">5</div>
-                        <div class="stat-label">模型</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">实时</div>
-                        <div class="stat-label">更新</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">移动端</div>
-                        <div class="stat-label">优化</div>
-                    </div>
+                <div class="card-tags">
+                    <span class="tag">5个模型</span>
+                    <span class="tag">移动优化</span>
+                    <span class="tag">纯数据</span>
                 </div>
             </a>
             
@@ -205,21 +183,12 @@
                     <div class="card-arrow">→</div>
                 </div>
                 <div class="card-description">
-                    结合技术指标与数据分析的交易策略
+                    结合技术指标与数据分析的交易策略，双重验证提高准确性。
                 </div>
-                <div class="card-stats">
-                    <div class="stat-item">
-                        <div class="stat-value">5</div>
-                        <div class="stat-label">模型</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">实时</div>
-                        <div class="stat-label">更新</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">移动端</div>
-                        <div class="stat-label">优化</div>
-                    </div>
+                <div class="card-tags">
+                    <span class="tag">5个模型</span>
+                    <span class="tag">移动优化</span>
+                    <span class="tag">技术指标</span>
                 </div>
             </a>
             
@@ -230,47 +199,38 @@
                     <div class="card-arrow">→</div>
                 </div>
                 <div class="card-description">
-                    整合新闻情感分析与数据的交易策略
+                    整合新闻情感分析与数据的交易策略，捕捉市场情绪变化。
                 </div>
-                <div class="card-stats">
-                    <div class="stat-item">
-                        <div class="stat-value">5</div>
-                        <div class="stat-label">模型</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">实时</div>
-                        <div class="stat-label">更新</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">移动端</div>
-                        <div class="stat-label">优化</div>
-                    </div>
+                <div class="card-tags">
+                    <span class="tag">5个模型</span>
+                    <span class="tag">移动优化</span>
+                    <span class="tag">情感分析</span>
                 </div>
             </a>
         </div>
         
         <div class="footer">
             <div>© 2024 大模型交易比赛</div>
-            <div style="margin-top: 8px;">GitHub自动部署系统</div>
+            <div style="margin-top: 8px; font-size: 0.75rem; opacity: 0.8;">
+                专为移动设备优化 | 建议横屏查看图表效果更佳
+            </div>
         </div>
     </div>
     
     <script>
-        function updateTime() {
-            const now = new Date();
-            document.getElementById('updateTime').textContent = 
-                now.toLocaleString('zh-CN', { 
-                    year: 'numeric', 
-                    month: '2-digit', 
-                    day: '2-digit',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit'
-                });
-        }
+        // 简单的设备检测
+        const isMobile = window.innerWidth <= 768;
+        console.log(`📱 移动端主页面加载，设备检测: ${isMobile ? '移动端' : '桌面端'}`);
         
-        updateTime();
-        setInterval(updateTime, 1000);
+        // 添加卡片点击效果
+        document.querySelectorAll('.pattern-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
     </script>
 </body>
 </html>
