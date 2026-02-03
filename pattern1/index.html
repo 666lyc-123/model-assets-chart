@@ -250,7 +250,7 @@
     <div class="app-container">
         <div class="compact-header">
             <h1>模式1-纯数据</h1>
-            <div class="time-display" id="currentTime">2026-01-21 20:38:35</div>
+            <div class="time-display" id="currentTime">2026-02-03 10:29:56</div>
         </div>
         
         <div class="chart-section">
@@ -264,7 +264,7 @@
         <div class="models-grid" id="modelsContainer"></div>
     </div>
 
-    <script src="./assets_data.js?v=202601212038"></script>
+    <script src="./assets_data.js?v=202602031029"></script>
     <script>
         // 检测设备类型和屏幕大小
         const isMobile = window.innerWidth <= 768;
@@ -400,6 +400,76 @@
             
             console.log(`✅ 准备渲染 ${traces.length} 条轨迹`);
             
+            // 固定Y轴范围：1,000,000 到 1,040,000
+            const yMin = 1000000;
+            const yMax = 1040000;
+            
+            // 检查数据是否在范围内，如果超出则调整范围
+            let dataYMin = yMin;
+            let dataYMax = yMax;
+            
+            for (const trace of traces) {
+                const traceYMin = Math.min(...trace.y);
+                const traceYMax = Math.max(...trace.y);
+                
+                if (traceYMin < dataYMin) dataYMin = traceYMin;
+                if (traceYMax > dataYMax) dataYMax = traceYMax;
+            }
+            
+            // 确保数据在范围内显示，如果数据超出，适当扩展范围
+            let finalYMin = Math.min(yMin, Math.floor(dataYMin / 10000) * 10000);
+            let finalYMax = Math.max(yMax, Math.ceil(dataYMax / 10000) * 10000);
+            
+            // 生成刻度值：1000000, 1010000, 1020000, 1030000, 1040000
+            const yTickValues = [];
+            const yTickTexts = [];
+            
+            for (let i = 1000000; i <= finalYMax; i += 10000) {
+                if (i >= finalYMin && i <= finalYMax) {
+                    yTickValues.push(i);
+                    yTickTexts.push(i.toLocaleString());
+                }
+            }
+            
+            // 如果生成的刻度太多（超过10个），则只显示主要刻度
+            const maxTicks = 10;
+            if (yTickValues.length > maxTicks) {
+                const filteredTickValues = [];
+                const filteredTickTexts = [];
+                const step = Math.ceil(yTickValues.length / maxTicks);
+                
+                for (let i = 0; i < yTickValues.length; i += step) {
+                    filteredTickValues.push(yTickValues[i]);
+                    filteredTickTexts.push(yTickTexts[i]);
+                }
+                
+                yTickValues.splice(0, yTickValues.length, ...filteredTickValues);
+                yTickTexts.splice(0, yTickTexts.length, ...filteredTickTexts);
+            }
+            
+            // 找到最早的日期作为起始日期
+            let earliestDate = null;
+            for (const trace of traces) {
+                if (trace.x && trace.x.length > 0) {
+                    const traceEarliest = new Date(trace.x[0]);
+                    if (!earliestDate || traceEarliest < earliestDate) {
+                        earliestDate = traceEarliest;
+                    }
+                }
+            }
+            
+            // 如果没有找到日期，使用当前日期
+            if (!earliestDate) {
+                earliestDate = new Date();
+            }
+            
+            // 设置起始日期为12/17（2023-12-17）
+            // 如果数据中有更早的日期，使用最早的日期
+            const startDate = new Date('2023-12-17');
+            if (earliestDate < startDate) {
+                startDate.setFullYear(earliestDate.getFullYear(), earliestDate.getMonth(), earliestDate.getDate());
+            }
+            
             // 移动端优化的布局
             const layout = {
                 title: { text: '', font: { size: 0 } },
@@ -411,8 +481,10 @@
                     },
                     type: 'date',
                     tickformat: '%m/%d',
-                    tickmode: 'auto',
-                    nticks: isMobile ? 4 : 6,
+                    tickmode: 'linear',  // 使用线性刻度
+                    tick0: startDate,  // 起始日期为12/17
+                    dtick: 7 * 24 * 60 * 60 * 1000, // 每7天一个刻度
+                    nticks: isMobile ? 5 : 8,
                     gridcolor: 'rgba(0,0,0,0.05)',
                     gridwidth: 0.5,
                     showline: false,
@@ -421,26 +493,53 @@
                     showgrid: true,
                     automargin: true,
                     // 移动端适配：旋转标签避免重叠
-                    tickangle: isSmallMobile ? -45 : 0
+                    tickangle: isSmallMobile ? -45 : 0,
+                    // 设置网格线样式
+                    gridwidth: 0.3,
+                    gridcolor: 'rgba(0,0,0,0.05)',
+                    // 添加次网格线
+                    minor: {
+                        gridwidth: 0.1,
+                        gridcolor: 'rgba(0,0,0,0.02)',
+                        dtick: 1 * 24 * 60 * 60 * 1000  // 每天一个小刻度
+                    }
                 },
                 yaxis: {
                     title: { text: '', font: { size: 0 } },
                     tickformat: ',.0f',  // 显示完整数字，不使用科学计数法
                     tickfont: { 
-                        size: deviceConfig.fontSize,
+                        size: Math.max(deviceConfig.fontSize - 2, 8),  // 纵轴刻度字体小一点
                         color: '#64748b'
                     },
                     gridcolor: 'rgba(0,0,0,0.05)',
-                    gridwidth: 0.5,
-                    tickmode: 'auto',
-                    nticks: isMobile ? 4 : 5,
+                    gridwidth: 0.3,
+                    // 设置刻度值
+                    tickmode: 'array',
+                    tickvals: [1000000, 1010000, 1020000, 1030000, 1040000],
+                    ticktext: ['1,000,000', '1,010,000', '1,020,000', '1,030,000', '1,040,000'],
+                    // 设置Y轴范围
+                    range: [finalYMin - 5000, finalYMax + 5000],
                     showline: false,
                     linewidth: 0,
                     zeroline: false,
                     showgrid: true,
                     automargin: true,
                     // 禁用科学计数法
-                    exponentformat: 'none'
+                    exponentformat: 'none',
+                    // 设置网格线样式
+                    gridwidth: 0.3,
+                    gridcolor: 'rgba(0,0,0,0.05)',
+                    // 添加次网格线 - 每隔10,000一条线
+                    minor: {
+                        ticklen: 2,
+                        tickcolor: 'rgba(0,0,0,0.1)',
+                        gridwidth: 0.1,
+                        gridcolor: 'rgba(0,0,0,0.02)',
+                        dtick: 10000  // 每隔10,000一个小刻度
+                    },
+                    // 添加密集网格线
+                    gridcolor: 'rgba(0,0,0,0.02)',
+                    gridwidth: 0.1
                 },
                 hovermode: 'x unified',
                 hoverlabel: {
@@ -464,15 +563,22 @@
                     visible: deviceConfig.showLegend
                 },
                 margin: { 
-                    l: 60,  // 增加左边距以适应完整数字
+                    l: 70,  // 增加左边距以适应完整数字
                     r: 20,
                     t: 10,
-                    b: 45
+                    b: 50
                 },
                 showlegend: deviceConfig.showLegend,
                 autosize: true,
                 dragmode: false,  // 移动端禁用拖拽
-                scrollZoom: false  // 移动端禁用滚轮缩放
+                scrollZoom: false,  // 移动端禁用滚轮缩放
+                // 全局网格线设置
+                grid: {
+                    rows: null,
+                    columns: null,
+                    pattern: 'independent',
+                    roworder: 'top to bottom'
+                }
             };
             
             const config = {
