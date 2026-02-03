@@ -250,7 +250,7 @@
     <div class="app-container">
         <div class="compact-header">
             <h1>模式2-数据+技术</h1>
-            <div class="time-display" id="currentTime">2026-02-03 10:49:07</div>
+            <div class="time-display" id="currentTime">2026-02-03 17:26:18</div>
         </div>
         
         <div class="chart-section">
@@ -264,7 +264,7 @@
         <div class="models-grid" id="modelsContainer"></div>
     </div>
 
-    <script src="./assets_data.js?v=202602031049"></script>
+    <script src="./assets_data.js?v=202602031726"></script>
     <script>
         // 检测设备类型和屏幕大小
         const isMobile = window.innerWidth <= 768;
@@ -272,7 +272,8 @@
         
         console.log(`📱 设备检测: 宽度=${window.innerWidth}px, 移动端=${isMobile}, 小屏=${isSmallMobile}`);
         
-        const colors = {"deepseek-v3": "#2196f3", "qwen-72b": "#ff9800", "gpt-5": "#e91e63", "gemini-3-pro": "#4caf50", "llama-3.1-405b": "#9c27b0"};
+        const colors = {"deepseek-v3": "#2196f3", "qwen-72b": "#ff9800", "gpt-5": "#e91e63", "gemini-3-pro": "#4caf50", "llama-3.1-405b": "#9c27b0", "multi-agent": "#00bcd4"};
+        const shortNames = {"deepseek-v3": "DeepSeek", "qwen-72b": "Qwen", "gpt-5": "GPT-5", "gemini-3-pro": "Gemini", "llama-3.1-405b": "Llama", "multi-agent": "Multi-Agent"};
         
         // 设备适配的配置
         const getDeviceConfig = () => {
@@ -671,13 +672,6 @@
         
         // 获取模型简称
         function getModelShortName(fullName) {
-            const shortNames = {
-                'deepseek-v3': 'DeepSeek',
-                'qwen-72b': 'Qwen',
-                'gpt-5': 'GPT-5',
-                'gemini-3-pro': 'Gemini',
-                'llama-3.1-405b': 'Llama'
-            };
             return shortNames[fullName] || fullName;
         }
         
