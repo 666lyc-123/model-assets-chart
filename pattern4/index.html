@@ -250,7 +250,7 @@
     <div class="app-container">
         <div class="compact-header">
             <h1>模式4-多智能体</h1>
-            <div class="time-display" id="currentTime">2026-02-03 17:27:37</div>
+            <div class="time-display" id="currentTime">2026-02-04 17:27:48</div>
         </div>
         
         <div class="chart-section">
@@ -264,7 +264,7 @@
         <div class="models-grid" id="modelsContainer"></div>
     </div>
 
-    <script src="./assets_data.js?v=202602031727"></script>
+    <script src="./assets_data.js?v=202602041727"></script>
     <script>
         // 检测设备类型和屏幕大小
         const isMobile = window.innerWidth <= 768;
@@ -401,9 +401,9 @@
             
             console.log(`✅ 准备渲染 ${traces.length} 条轨迹`);
             
-            // 固定Y轴范围：1,000,000 到 1,040,000
+            // 固定Y轴范围：1,000,000 到 1,080,000
             const yMin = 1000000;
-            const yMax = 1040000;
+            const yMax = 1080000;
             
             // 检查数据是否在范围内，如果超出则调整范围
             let dataYMin = yMin;
@@ -421,7 +421,7 @@
             let finalYMin = Math.min(yMin, Math.floor(dataYMin / 10000) * 10000);
             let finalYMax = Math.max(yMax, Math.ceil(dataYMax / 10000) * 10000);
             
-            // 生成刻度值：1000000, 1010000, 1020000, 1030000, 1040000
+            // 生成刻度值：1000000, 1020000, 1040000, 1060000, 1080000
             const yTickValues = [];
             const yTickTexts = [];
             
@@ -516,8 +516,8 @@
                     gridwidth: 0.3,
                     // 设置刻度值
                     tickmode: 'array',
-                    tickvals: [1000000, 1010000, 1020000, 1030000, 1040000],
-                    ticktext: ['1,000,000', '1,010,000', '1,020,000', '1,030,000', '1,040,000'],
+                    tickvals: [1000000, 1020000, 1040000, 1060000, 1080000],
+                    ticktext: ['1,000,000', '1,020,000', '1,040,000', '1,060,000', '1,080,000'],
                     // 设置Y轴范围
                     range: [finalYMin - 5000, finalYMax + 5000],
                     showline: false,
@@ -536,7 +536,7 @@
                         tickcolor: 'rgba(0,0,0,0.1)',
                         gridwidth: 0.1,
                         gridcolor: 'rgba(0,0,0,0.02)',
-                        dtick: 10000  // 每隔10,000一个小刻度
+                        dtick: 20000  // 每隔10,000一个小刻度
                     },
                     // 添加密集网格线
                     gridcolor: 'rgba(0,0,0,0.02)',
