@@ -37,22 +37,9 @@
             padding: 0;
         }
         
-        /* 针对小屏手机的优化 */
-        @media (max-width: 320px) {
-            body { font-size: 12px; }
-            .app-container { padding: 8px; }
-            .card { padding: 10px; }
-        }
-        
-        /* 针对中等屏幕手机的优化 */
-        @media (min-width: 321px) and (max-width: 375px) {
-            body { font-size: 13px; }
-        }
-        
-        /* 针对大屏手机的优化 */
-        @media (min-width: 376px) and (max-width: 425px) {
-            body { font-size: 14px; }
-        }
+        @media (max-width: 320px) { body { font-size: 12px; } }
+        @media (min-width: 321px) and (max-width: 375px) { body { font-size: 13px; } }
+        @media (min-width: 376px) and (max-width: 425px) { body { font-size: 14px; } }
         
         .app-container {
             max-width: 100%;
@@ -60,7 +47,6 @@
             padding: 12px;
         }
         
-        /* 简化头部 */
         .compact-header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
@@ -88,7 +74,6 @@
             backdrop-filter: blur(10px);
         }
         
-        /* 图表容器 */
         .chart-section {
             background: var(--card-bg);
             border-radius: var(--border-radius);
@@ -110,10 +95,9 @@
         
         .chart-container {
             width: 100%;
-            height: 280px;  /* 适合手机屏幕的高度 */
+            height: 280px;
         }
         
-        /* 简化图例 */
         .compact-legend {
             display: flex;
             flex-wrap: wrap;
@@ -140,7 +124,6 @@
             border-radius: 50%;
         }
         
-        /* 模型卡片 - 单列布局 */
         .models-grid {
             display: flex;
             flex-direction: column;
@@ -185,8 +168,6 @@
             border-radius: 50%;
         }
         
-        /* 移除了天数样式 */
-        
         .model-value {
             font-size: 1.3rem;
             font-weight: 800;
@@ -204,21 +185,37 @@
             font-weight: 600;
         }
         
-        .change-up {
-            color: var(--success);
+        .change-up { color: var(--success); }
+        .change-down { color: var(--danger); }
+        .change-icon { font-size: 0.9rem; }
+        
+        /* 新增指令样式 */
+        .instruction-summary {
+            margin-top: 12px;
+            padding-top: 8px;
+            border-top: 1px dashed #cbd5e1;
+            font-size: 0.75rem;
+            color: #334155;
         }
         
-        .change-down {
-            color: var(--danger);
+        .instruction-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--dark);
         }
         
-        .change-icon {
-            font-size: 0.9rem;
+        .instruction-list {
+            list-style: none;
+            padding-left: 0;
         }
         
-        /* 工具类 */
-        .hidden {
-            display: none !important;
+        .instruction-item {
+            background: #f1f5f9;
+            border-radius: 4px;
+            padding: 4px 8px;
+            margin-bottom: 4px;
+            font-size: 0.7rem;
+            color: #1e293b;
         }
         
         .loading {
@@ -244,13 +241,15 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+        
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
     <div class="app-container">
         <div class="compact-header">
             <h1>模式5-巴菲特</h1>
-            <div class="time-display" id="currentTime">2026-02-04 17:37:37</div>
+            <div class="time-display" id="currentTime">2026-02-15 17:17:12</div>
         </div>
         
         <div class="chart-section">
@@ -264,80 +263,36 @@
         <div class="models-grid" id="modelsContainer"></div>
     </div>
 
-    <script src="./assets_data.js?v=202602041737"></script>
+    <script src="./assets_data.js?v=202602151717"></script>
     <script>
-        // 检测设备类型和屏幕大小
         const isMobile = window.innerWidth <= 768;
         const isSmallMobile = window.innerWidth <= 375;
-        
-        console.log(`📱 设备检测: 宽度=${window.innerWidth}px, 移动端=${isMobile}, 小屏=${isSmallMobile}`);
-        
         const colors = {"deepseek-v3": "#2196f3", "qwen-72b": "#ff9800", "gpt-5": "#e91e63", "gemini-3-pro": "#4caf50", "llama-3.1-405b": "#9c27b0", "multi-agent": "#00bcd4"};
         const shortNames = {"deepseek-v3": "DeepSeek", "qwen-72b": "Qwen", "gpt-5": "GPT-5", "gemini-3-pro": "Gemini", "llama-3.1-405b": "Llama", "multi-agent": "Multi-Agent"};
         
-        // 设备适配的配置
-        const getDeviceConfig = () => {
+        function getDeviceConfig() {
             if (isSmallMobile) {
-                return {
-                    chartHeight: 250,
-                    fontSize: 9,
-                    lineWidth: 1.8,
-                    legendFontSize: 10,
-                    showLegend: false  // 小屏隐藏图例，用卡片代替
-                };
+                return { chartHeight: 250, fontSize: 9, lineWidth: 1.8, legendFontSize: 10, showLegend: false };
             } else if (isMobile) {
-                return {
-                    chartHeight: 280,
-                    fontSize: 10,
-                    lineWidth: 2,
-                    legendFontSize: 11,
-                    showLegend: true
-                };
+                return { chartHeight: 280, fontSize: 10, lineWidth: 2, legendFontSize: 11, showLegend: true };
             } else {
-                return {
-                    chartHeight: 320,
-                    fontSize: 12,
-                    lineWidth: 2.2,
-                    legendFontSize: 12,
-                    showLegend: true
-                };
+                return { chartHeight: 320, fontSize: 12, lineWidth: 2.2, legendFontSize: 12, showLegend: true };
             }
-        };
+        }
         
-        // 主初始化函数
         async function initMobileDashboard() {
-            console.log('🚀 初始化移动端仪表板...');
-            
-            // 检查数据是否加载
-            if (typeof modelAssetsData === 'undefined') {
-                console.error('❌ 数据文件加载失败');
+            if (typeof modelAssetsData === 'undefined' || typeof modelInstructionsData === 'undefined') {
                 showErrorMessage('数据加载失败，请刷新页面');
                 return;
             }
-            
-            console.log(`✅ 数据加载成功，找到 ${Object.keys(modelAssetsData).length} 个模型数据`);
-            
-            // 渲染图表
             await renderMobileChart();
-            
-            // 渲染模型卡片
             renderModelCards();
-            
-            // 启动定时更新
             startTimeUpdates();
-            
-            console.log('🎉 移动端仪表板初始化完成');
         }
         
-        // 渲染移动端优化图表
         async function renderMobileChart() {
-            console.log('📊 渲染移动端图表...');
-            
             const traces = [];
             const deviceConfig = getDeviceConfig();
-            let activeModels = 0;
-            
-            // 清空图例区域
             const legendContainer = document.getElementById('chartLegend');
             if (deviceConfig.showLegend) {
                 legendContainer.innerHTML = '';
@@ -346,289 +301,62 @@
             }
             
             for (const [modelName, data] of Object.entries(modelAssetsData)) {
-                if (!data || data.length === 0) {
-                    console.log(`⚠️  模型 ${modelName} 无数据，跳过`);
-                    continue;
-                }
-                
-                activeModels++;
+                if (!data || data.length === 0) continue;
                 const x = data.map(item => item[0]);
                 const y = data.map(item => item[1]);
                 const color = colors[modelName] || '#666';
-                
-                // 创建轨迹
                 traces.push({
-                    x: x,
-                    y: y,
-                    mode: 'lines+markers',  // 为移动端保留标记点，便于触摸
-                    type: 'scatter',
+                    x: x, y: y, mode: 'lines+markers', type: 'scatter',
                     name: getModelShortName(modelName),
-                    line: { 
-                        color: color,
-                        width: deviceConfig.lineWidth,
-                        shape: 'spline',
-                        smoothing: 0.3
-                    },
-                    marker: {
-                        size: isMobile ? 4 : 5,
-                        color: color,
-                        opacity: 0.7
-                    },
+                    line: { color: color, width: deviceConfig.lineWidth, shape: 'spline', smoothing: 0.3 },
+                    marker: { size: isMobile ? 4 : 5, color: color, opacity: 0.7 },
                     hoverinfo: 'x+y+name',
-                    hovertemplate: 
-                        '<b>%{x}</b><br>' +
-                        '<span style="color:%{line.color}">●</span> <b>%{data.name}</b>: ¥%{y:,.0f}<br>' +
-                        '<extra></extra>'
+                    hovertemplate: '<b>%{x}</b><br><span style="color:%{line.color}">●</span> <b>%{data.name}</b>: ¥%{y:,.0f}<br><extra></extra>'
                 });
-                
-                // 如果显示图例，则添加图例项
                 if (deviceConfig.showLegend) {
                     const legendItem = document.createElement('div');
                     legendItem.className = 'legend-item';
-                    legendItem.innerHTML = `
-                        <div class="legend-color" style="background: ${color}"></div>
-                        <span>${getModelShortName(modelName)}</span>
-                    `;
+                    legendItem.innerHTML = `<div class="legend-color" style="background:${color}"></div><span>${getModelShortName(modelName)}</span>`;
                     legendContainer.appendChild(legendItem);
                 }
             }
             
             if (traces.length === 0) {
-                console.warn('⚠️  没有可渲染的数据');
                 showErrorMessage('暂无有效数据');
                 return;
             }
             
-            console.log(`✅ 准备渲染 ${traces.length} 条轨迹`);
-            
-            // 固定Y轴范围：1,000,000 到 1,080,000
-            const yMin = 1000000;
-            const yMax = 1080000;
-            
-            // 检查数据是否在范围内，如果超出则调整范围
-            let dataYMin = yMin;
-            let dataYMax = yMax;
-            
-            for (const trace of traces) {
-                const traceYMin = Math.min(...trace.y);
-                const traceYMax = Math.max(...trace.y);
-                
-                if (traceYMin < dataYMin) dataYMin = traceYMin;
-                if (traceYMax > dataYMax) dataYMax = traceYMax;
-            }
-            
-            // 确保数据在范围内显示，如果数据超出，适当扩展范围
-            let finalYMin = Math.min(yMin, Math.floor(dataYMin / 10000) * 10000);
-            let finalYMax = Math.max(yMax, Math.ceil(dataYMax / 10000) * 10000);
-            
-            // 生成刻度值：1000000, 1020000, 1040000, 1060000, 1080000
-            const yTickValues = [];
-            const yTickTexts = [];
-            
-            for (let i = 1000000; i <= finalYMax; i += 10000) {
-                if (i >= finalYMin && i <= finalYMax) {
-                    yTickValues.push(i);
-                    yTickTexts.push(i.toLocaleString());
-                }
-            }
-            
-            // 如果生成的刻度太多（超过10个），则只显示主要刻度
-            const maxTicks = 10;
-            if (yTickValues.length > maxTicks) {
-                const filteredTickValues = [];
-                const filteredTickTexts = [];
-                const step = Math.ceil(yTickValues.length / maxTicks);
-                
-                for (let i = 0; i < yTickValues.length; i += step) {
-                    filteredTickValues.push(yTickValues[i]);
-                    filteredTickTexts.push(yTickTexts[i]);
-                }
-                
-                yTickValues.splice(0, yTickValues.length, ...filteredTickValues);
-                yTickTexts.splice(0, yTickTexts.length, ...filteredTickTexts);
-            }
-            
-            // 找到最早的日期作为起始日期
-            let earliestDate = null;
-            for (const trace of traces) {
-                if (trace.x && trace.x.length > 0) {
-                    const traceEarliest = new Date(trace.x[0]);
-                    if (!earliestDate || traceEarliest < earliestDate) {
-                        earliestDate = traceEarliest;
-                    }
-                }
-            }
-            
-            // 如果没有找到日期，使用当前日期
-            if (!earliestDate) {
-                earliestDate = new Date();
-            }
-            
-            // 设置起始日期为12/17（2023-12-17）
-            // 如果数据中有更早的日期，使用最早的日期
-            const startDate = new Date('2023-12-17');
-            if (earliestDate < startDate) {
-                startDate.setFullYear(earliestDate.getFullYear(), earliestDate.getMonth(), earliestDate.getDate());
-            }
-            
-            // 移动端优化的布局
             const layout = {
-                title: { text: '', font: { size: 0 } },
-                xaxis: {
-                    title: { text: '', font: { size: 0 } },
-                    tickfont: { 
-                        size: deviceConfig.fontSize,
-                        color: '#64748b'
-                    },
-                    type: 'date',
-                    tickformat: '%m/%d',
-                    tickmode: 'linear',  // 使用线性刻度
-                    tick0: startDate,  // 起始日期为12/17
-                    dtick: 7 * 24 * 60 * 60 * 1000, // 每7天一个刻度
-                    nticks: isMobile ? 5 : 8,
-                    gridcolor: 'rgba(0,0,0,0.05)',
-                    gridwidth: 0.5,
-                    showline: false,
-                    linewidth: 0,
-                    zeroline: false,
-                    showgrid: true,
-                    automargin: true,
-                    // 移动端适配：旋转标签避免重叠
-                    tickangle: isSmallMobile ? -45 : 0,
-                    // 设置网格线样式
-                    gridwidth: 0.3,
-                    gridcolor: 'rgba(0,0,0,0.05)',
-                    // 添加次网格线
-                    minor: {
-                        gridwidth: 0.1,
-                        gridcolor: 'rgba(0,0,0,0.02)',
-                        dtick: 1 * 24 * 60 * 60 * 1000  // 每天一个小刻度
-                    }
-                },
-                yaxis: {
-                    title: { text: '', font: { size: 0 } },
-                    tickformat: ',.0f',  // 显示完整数字，不使用科学计数法
-                    tickfont: { 
-                        size: Math.max(deviceConfig.fontSize - 2, 8),  // 纵轴刻度字体小一点
-                        color: '#64748b'
-                    },
-                    gridcolor: 'rgba(0,0,0,0.05)',
-                    gridwidth: 0.3,
-                    // 设置刻度值
-                    tickmode: 'array',
-                    tickvals: [1000000, 1020000, 1040000, 1060000, 1080000],
-                    ticktext: ['1,000,000', '1,020,000', '1,040,000', '1,060,000', '1,080,000'],
-                    // 设置Y轴范围
-                    range: [finalYMin - 5000, finalYMax + 5000],
-                    showline: false,
-                    linewidth: 0,
-                    zeroline: false,
-                    showgrid: true,
-                    automargin: true,
-                    // 禁用科学计数法
-                    exponentformat: 'none',
-                    // 设置网格线样式
-                    gridwidth: 0.3,
-                    gridcolor: 'rgba(0,0,0,0.05)',
-                    // 添加次网格线 - 每隔10,000一条线
-                    minor: {
-                        ticklen: 2,
-                        tickcolor: 'rgba(0,0,0,0.1)',
-                        gridwidth: 0.1,
-                        gridcolor: 'rgba(0,0,0,0.02)',
-                        dtick: 20000  // 每隔10,000一个小刻度
-                    },
-                    // 添加密集网格线
-                    gridcolor: 'rgba(0,0,0,0.02)',
-                    gridwidth: 0.1
-                },
-                hovermode: 'x unified',
-                hoverlabel: {
-                    font: { size: deviceConfig.fontSize },
-                    bgcolor: 'rgba(255, 255, 255, 0.95)',
-                    bordercolor: '#cbd5e1',
-                    align: 'left'
-                },
-                plot_bgcolor: 'white',
-                paper_bgcolor: 'white',
-                legend: {
-                    orientation: 'h',
-                    y: -0.25,
-                    font: { size: deviceConfig.legendFontSize },
-                    xanchor: 'center',
-                    x: 0.5,
-                    bgcolor: 'rgba(255,255,255,0.8)',
-                    bordercolor: '#e2e8f0',
-                    borderwidth: 0.5,
-                    // 根据设备决定是否显示
-                    visible: deviceConfig.showLegend
-                },
-                margin: { 
-                    l: 70,  // 增加左边距以适应完整数字
-                    r: 20,
-                    t: 10,
-                    b: 50
-                },
-                showlegend: deviceConfig.showLegend,
-                autosize: true,
-                dragmode: false,  // 移动端禁用拖拽
-                scrollZoom: false,  // 移动端禁用滚轮缩放
-                // 全局网格线设置
-                grid: {
-                    rows: null,
-                    columns: null,
-                    pattern: 'independent',
-                    roworder: 'top to bottom'
-                }
-            };
-            
-            const config = {
-                responsive: true,
-                displayModeBar: true,  // 保留工具栏，但可以自定义
-                modeBarButtonsToRemove: ['lasso2d', 'select2d', 'autoScale2d'],
-                displaylogo: false,
-                scrollZoom: false,
-                staticPlot: false
+                xaxis: { tickfont: { size: deviceConfig.fontSize }, type: 'date', tickformat: '%m/%d', dtick: 7*24*60*60*1000, gridcolor: 'rgba(0,0,0,0.05)' },
+                yaxis: { tickfont: { size: deviceConfig.fontSize-2 }, tickformat: ',.0f', tickmode: 'array', tickvals: [1000000,1010000,1020000,1030000,1040000], ticktext: ['1,000,000','1,010,000','1,020,000','1,030,000','1,040,000'], range: [995000,1045000], gridcolor: 'rgba(0,0,0,0.05)' },
+                hovermode: 'x unified', hoverlabel: { font: { size: deviceConfig.fontSize } },
+                plot_bgcolor: 'white', paper_bgcolor: 'white',
+                legend: { orientation: 'h', y: -0.25, font: { size: deviceConfig.legendFontSize }, xanchor: 'center', x: 0.5, visible: deviceConfig.showLegend },
+                margin: { l: 70, r: 20, t: 10, b: 50 },
+                showlegend: deviceConfig.showLegend, autosize: true, dragmode: false, scrollZoom: false
             };
             
             try {
-                // 移除加载提示
-                const chartContainer = document.getElementById('chart');
-                chartContainer.innerHTML = '';
-                
-                // 使用Promise方式渲染
-                await Plotly.newPlot('chart', traces, layout, config);
-                console.log('✅ 图表渲染成功');
-                
-                // 添加图表面积触摸优化
-                optimizeChartForTouch();
-                
+                document.getElementById('chart').innerHTML = '';
+                await Plotly.newPlot('chart', traces, layout, { responsive: true, displaylogo: false, modeBarButtonsToRemove: ['lasso2d', 'select2d'] });
             } catch(error) {
-                console.error('❌ 图表渲染失败:', error);
                 showErrorMessage('图表渲染失败: ' + error.message);
             }
         }
         
-        // 优化图表面积触摸体验
-        function optimizeChartForTouch() {
-            const chartElement = document.getElementById('chart');
-            
-            // 为移动端添加触摸优化
-            if ('ontouchstart' in window) {
-                chartElement.style.touchAction = 'pan-y';
-                console.log('👆 已启用触摸优化');
-            }
-        }
-        
-        // 渲染模型卡片
         function renderModelCards() {
-            if (typeof modelSummaryData === 'undefined') {
-                console.warn('⚠️  无统计数据显示');
-                return;
-            }
-            
             const container = document.getElementById('modelsContainer');
             let cardsHTML = '';
+            
+            // 获取最新日期（用于显示当日指令）
+            let latestDate = null;
+            for (const model in modelInstructionsData) {
+                const dates = Object.keys(modelInstructionsData[model]);
+                if (dates.length > 0) {
+                    dates.sort().reverse();
+                    if (!latestDate || dates[0] > latestDate) latestDate = dates[0];
+                }
+            }
             
             for (const [modelName, data] of Object.entries(modelSummaryData)) {
                 const color = colors[modelName] || '#666';
@@ -637,112 +365,66 @@
                 const changeClass = change >= 0 ? 'change-up' : 'change-down';
                 const changeIcon = change >= 0 ? '↗' : '↘';
                 const changeText = change >= 0 ? `+${change.toFixed(1)}%` : `${change.toFixed(1)}%`;
-                const formattedValue = formatNumberWithCommas(data.current);  // 使用新的格式化函数
+                const formattedValue = '¥' + Math.round(data.current).toLocaleString();
                 
-                // 移除天数显示，只显示模型名称、总权益和涨跌幅
+                // 获取当日指令（最新日期）
+                let instrHTML = '';
+                if (latestDate && modelInstructionsData[modelName] && modelInstructionsData[modelName][latestDate]) {
+                    const instrs = modelInstructionsData[modelName][latestDate];
+                    if (instrs.length > 0) {
+                        instrHTML = '<div class="instruction-summary"><div class="instruction-title">📋 今日买入</div><ul class="instruction-list">';
+                        instrs.forEach(txt => {
+                            instrHTML += `<li class="instruction-item">${txt}</li>`;
+                        });
+                        instrHTML += '</ul></div>';
+                    }
+                }
+                
                 cardsHTML += `
                     <div class="model-card">
                         <div class="model-header">
                             <div class="model-name">
-                                <div class="model-color-dot" style="background: ${color}"></div>
+                                <div class="model-color-dot" style="background:${color}"></div>
                                 ${shortName}
                             </div>
                         </div>
-                        <div class="model-value" style="color: ${color}">
-                            ${formattedValue}
-                        </div>
+                        <div class="model-value" style="color:${color}">${formattedValue}</div>
                         <div class="model-change ${changeClass}">
                             <span class="change-icon">${changeIcon}</span>
                             <span>${changeText}</span>
                         </div>
+                        ${instrHTML}
                     </div>
                 `;
             }
-            
-            container.innerHTML = cardsHTML || '<div class="loading" style="grid-column:1/-1;">暂无模型数据</div>';
-            console.log(`📊 渲染了 ${Object.keys(modelSummaryData).length} 个模型卡片`);
+            container.innerHTML = cardsHTML || '<div class="loading">暂无模型数据</div>';
         }
         
-        // 修改数字格式化函数，不使用M/K单位，显示完整数字
-        function formatNumberWithCommas(num) {
-            // 显示完整数字，添加千分位分隔符
-            // 例如：1000000 → "¥1,000,000"
-            return '¥' + Math.round(num).toLocaleString();
-        }
-        
-        // 获取模型简称
         function getModelShortName(fullName) {
             return shortNames[fullName] || fullName;
         }
         
-        // 启动时间更新
         function startTimeUpdates() {
             function updateTime() {
                 const now = new Date();
-                document.getElementById('currentTime').textContent = 
-                    now.toLocaleString('zh-CN', {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit'
-                    });
+                document.getElementById('currentTime').textContent = now.toLocaleString('zh-CN');
             }
-            
             updateTime();
             setInterval(updateTime, 1000);
         }
         
-        // 显示错误信息
         function showErrorMessage(message) {
-            const chartContainer = document.getElementById('chart');
-            chartContainer.innerHTML = `
-                <div style="
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                    height: 100%;
-                    color: #64748b;
-                    text-align: center;
-                    padding: 20px;
-                ">
-                    <div style="font-size: 24px; margin-bottom: 10px;">📊</div>
-                    <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">图表加载失败</div>
-                    <div style="font-size: 12px; opacity: 0.8;">${message}</div>
-                    <button onclick="window.location.reload()" style="
-                        margin-top: 16px;
-                        padding: 8px 16px;
-                        background: var(--primary);
-                        color: white;
-                        border: none;
-                        border-radius: 6px;
-                        font-size: 12px;
-                        cursor: pointer;
-                    ">
-                        刷新页面
-                    </button>
-                </div>
-            `;
+            document.getElementById('chart').innerHTML = `<div style="display:flex;flex-direction:column;justify-content:center;align-items:center;height:100%;color:#64748b;text-align:center;padding:20px;"><div style="font-size:24px;margin-bottom:10px;">📊</div><div style="font-size:14px;font-weight:600;margin-bottom:8px;">图表加载失败</div><div style="font-size:12px;">${message}</div><button onclick="window.location.reload()" style="margin-top:16px;padding:8px 16px;background:var(--primary);color:white;border:none;border-radius:6px;">刷新页面</button></div>`;
         }
         
-        // 窗口大小变化时重新渲染
-        let resizeTimer;
         window.addEventListener('resize', function() {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(async function() {
-                console.log('🔄 窗口大小变化，重新渲染图表...');
-                await renderMobileChart();
-                
-                // 如果图表现已存在，重新调整大小
-                if (document.getElementById('chart').children.length > 0) {
-                    Plotly.Plots.resize(document.getElementById('chart'));
-                }
-            }, 250); // 250ms防抖
+            clearTimeout(window.resizeTimer);
+            window.resizeTimer = setTimeout(() => {
+                renderMobileChart();
+                Plotly.Plots.resize(document.getElementById('chart'));
+            }, 250);
         });
         
-        // 页面加载完成后初始化
         document.addEventListener('DOMContentLoaded', initMobileDashboard);
     </script>
 </body>
