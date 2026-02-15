@@ -189,35 +189,6 @@
         .change-down { color: var(--danger); }
         .change-icon { font-size: 0.9rem; }
         
-        /* 新增指令样式 */
-        .instruction-summary {
-            margin-top: 12px;
-            padding-top: 8px;
-            border-top: 1px dashed #cbd5e1;
-            font-size: 0.75rem;
-            color: #334155;
-        }
-        
-        .instruction-title {
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: var(--dark);
-        }
-        
-        .instruction-list {
-            list-style: none;
-            padding-left: 0;
-        }
-        
-        .instruction-item {
-            background: #f1f5f9;
-            border-radius: 4px;
-            padding: 4px 8px;
-            margin-bottom: 4px;
-            font-size: 0.7rem;
-            color: #1e293b;
-        }
-        
         .loading {
             display: flex;
             justify-content: center;
@@ -249,7 +220,7 @@
     <div class="app-container">
         <div class="compact-header">
             <h1>模式4-多智能体</h1>
-            <div class="time-display" id="currentTime">2026-02-15 17:39:15</div>
+            <div class="time-display" id="currentTime">2026-02-15 17:58:53</div>
         </div>
         
         <div class="chart-section">
@@ -263,7 +234,7 @@
         <div class="models-grid" id="modelsContainer"></div>
     </div>
 
-    <script src="./assets_data.js?v=202602151739"></script>
+    <script src="./assets_data.js?v=202602151758"></script>
     <script>
         const isMobile = window.innerWidth <= 768;
         const isSmallMobile = window.innerWidth <= 375;
@@ -281,7 +252,7 @@
         }
         
         async function initMobileDashboard() {
-            if (typeof modelAssetsData === 'undefined' || typeof modelInstructionsData === 'undefined') {
+            if (typeof modelAssetsData === 'undefined') {
                 showErrorMessage('数据加载失败，请刷新页面');
                 return;
             }
@@ -299,6 +270,10 @@
             } else {
                 legendContainer.classList.add('hidden');
             }
+            
+            // 收集所有数据用于动态计算范围
+            let allValues = [];
+            let allDates = [];
             
             for (const [modelName, data] of Object.entries(modelAssetsData)) {
                 if (!data || data.length === 0) continue;
@@ -319,6 +294,8 @@
                     legendItem.innerHTML = `<div class="legend-color" style="background:${color}"></div><span>${getModelShortName(modelName)}</span>`;
                     legendContainer.appendChild(legendItem);
                 }
+                allValues.push(...y);
+                allDates.push(...x);
             }
             
             if (traces.length === 0) {
@@ -326,19 +303,77 @@
                 return;
             }
             
+            // 动态计算Y轴范围（每20000一个刻度，确保所有数据可见）
+            const minVal = Math.min(...allValues);
+            const maxVal = Math.max(...allValues);
+            const padding = (maxVal - minVal) * 0.05; // 5% 边距
+            // 向下取整到最近的20000
+            const yMin = Math.floor((minVal - padding) / 20000) * 20000;
+            // 向上取整到最近的20000
+            const yMax = Math.ceil((maxVal + padding) / 20000) * 20000;
+            
+            // 生成Y轴刻度（每20000一个）
+            const yTickVals = [];
+            const yTickTexts = [];
+            for (let v = yMin; v <= yMax; v += 20000) {
+                yTickVals.push(v);
+                yTickTexts.push(v.toLocaleString());
+            }
+            
+            // 计算X轴范围（从最早日期到最晚日期）
+            const dateObjs = allDates.map(d => new Date(d));
+            const minDate = new Date(Math.min(...dateObjs));
+            const maxDate = new Date(Math.max(...dateObjs));
+            
+            // 设置X轴刻度：从最早日期开始，每15天一个
+            const tick0 = minDate;
+            const dtick = 15 * 24 * 60 * 60 * 1000; // 15天（毫秒）
+            
             const layout = {
-                xaxis: { tickfont: { size: deviceConfig.fontSize }, type: 'date', tickformat: '%m/%d', dtick: 7*24*60*60*1000, gridcolor: 'rgba(0,0,0,0.05)' },
-                yaxis: { tickfont: { size: deviceConfig.fontSize-2 }, tickformat: ',.0f', tickmode: 'array', tickvals: [1000000,1010000,1020000,1030000,1040000], ticktext: ['1,000,000','1,010,000','1,020,000','1,030,000','1,040,000'], range: [995000,1045000], gridcolor: 'rgba(0,0,0,0.05)' },
-                hovermode: 'x unified', hoverlabel: { font: { size: deviceConfig.fontSize } },
-                plot_bgcolor: 'white', paper_bgcolor: 'white',
-                legend: { orientation: 'h', y: -0.25, font: { size: deviceConfig.legendFontSize }, xanchor: 'center', x: 0.5, visible: deviceConfig.showLegend },
+                xaxis: { 
+                    tickfont: { size: deviceConfig.fontSize }, 
+                    type: 'date', 
+                    tickformat: '%m/%d',
+                    tick0: tick0,
+                    dtick: dtick,
+                    gridcolor: 'rgba(0,0,0,0.05)',
+                    range: [minDate, maxDate]
+                },
+                yaxis: { 
+                    tickfont: { size: deviceConfig.fontSize-2 }, 
+                    tickformat: ',.0f',
+                    tickmode: 'array',
+                    tickvals: yTickVals,
+                    ticktext: yTickTexts,
+                    range: [yMin, yMax],
+                    gridcolor: 'rgba(0,0,0,0.05)'
+                },
+                hovermode: 'x unified', 
+                hoverlabel: { font: { size: deviceConfig.fontSize } },
+                plot_bgcolor: 'white', 
+                paper_bgcolor: 'white',
+                legend: { 
+                    orientation: 'h', 
+                    y: -0.25, 
+                    font: { size: deviceConfig.legendFontSize }, 
+                    xanchor: 'center', 
+                    x: 0.5, 
+                    visible: deviceConfig.showLegend 
+                },
                 margin: { l: 70, r: 20, t: 10, b: 50 },
-                showlegend: deviceConfig.showLegend, autosize: true, dragmode: false, scrollZoom: false
+                showlegend: deviceConfig.showLegend, 
+                autosize: true, 
+                dragmode: false, 
+                scrollZoom: false
             };
             
             try {
                 document.getElementById('chart').innerHTML = '';
-                await Plotly.newPlot('chart', traces, layout, { responsive: true, displaylogo: false, modeBarButtonsToRemove: ['lasso2d', 'select2d'] });
+                await Plotly.newPlot('chart', traces, layout, { 
+                    responsive: true, 
+                    displaylogo: false, 
+                    modeBarButtonsToRemove: ['lasso2d', 'select2d'] 
+                });
             } catch(error) {
                 showErrorMessage('图表渲染失败: ' + error.message);
             }
@@ -348,16 +383,6 @@
             const container = document.getElementById('modelsContainer');
             let cardsHTML = '';
             
-            // 获取最新日期（用于显示当日指令）
-            let latestDate = null;
-            for (const model in modelInstructionsData) {
-                const dates = Object.keys(modelInstructionsData[model]);
-                if (dates.length > 0) {
-                    dates.sort().reverse();
-                    if (!latestDate || dates[0] > latestDate) latestDate = dates[0];
-                }
-            }
-            
             for (const [modelName, data] of Object.entries(modelSummaryData)) {
                 const color = colors[modelName] || '#666';
                 const shortName = getModelShortName(modelName);
@@ -366,19 +391,6 @@
                 const changeIcon = change >= 0 ? '↗' : '↘';
                 const changeText = change >= 0 ? `+${change.toFixed(1)}%` : `${change.toFixed(1)}%`;
                 const formattedValue = '¥' + Math.round(data.current).toLocaleString();
-                
-                // 获取当日指令（最新日期）
-                let instrHTML = '';
-                if (latestDate && modelInstructionsData[modelName] && modelInstructionsData[modelName][latestDate]) {
-                    const instrs = modelInstructionsData[modelName][latestDate];
-                    if (instrs.length > 0) {
-                        instrHTML = '<div class="instruction-summary"><div class="instruction-title">📋 今日买入</div><ul class="instruction-list">';
-                        instrs.forEach(txt => {
-                            instrHTML += `<li class="instruction-item">${txt}</li>`;
-                        });
-                        instrHTML += '</ul></div>';
-                    }
-                }
                 
                 cardsHTML += `
                     <div class="model-card">
@@ -393,7 +405,6 @@
                             <span class="change-icon">${changeIcon}</span>
                             <span>${changeText}</span>
                         </div>
-                        ${instrHTML}
                     </div>
                 `;
             }
