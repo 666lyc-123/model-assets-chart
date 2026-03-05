@@ -56,17 +56,21 @@ var modelAssetsData = {
     [
       "2026-03-04",
       989672.84
+    ],
+    [
+      "2026-03-05",
+      988948.1
     ]
   ]
 };
 var modelSummaryData = {
   "multi-agent": {
-    "current": 989672.84,
-    "change": -10327.160000000033,
-    "change_pct": -1.0327160000000033,
-    "days": 14,
+    "current": 988948.1,
+    "change": -11051.900000000023,
+    "change_pct": -1.1051900000000023,
+    "days": 15,
     "max": 1016241.64,
-    "min": 989672.84
+    "min": 988948.1
   }
 };
 var modelInstructionsData = {
@@ -118,6 +122,10 @@ var modelInstructionsData = {
       "华安黄金ETF 800单位",
       "华夏豆粕ETF 10000单位",
       "建信能化ETF 20000单位"
+    ],
+    "2026-03-05": [
+      "建信能化ETF 30000单位",
+      "中国10年国债ETF 200单位"
     ]
   }
 };
