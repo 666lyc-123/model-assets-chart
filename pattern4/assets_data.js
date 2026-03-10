@@ -68,17 +68,21 @@ var modelAssetsData = {
     [
       "2026-03-09",
       995847.55
+    ],
+    [
+      "2026-03-10",
+      979208.46
     ]
   ]
 };
 var modelSummaryData = {
   "multi-agent": {
-    "current": 995847.55,
-    "change": -4152.449999999953,
-    "change_pct": -0.4152449999999953,
-    "days": 17,
+    "current": 979208.46,
+    "change": -20791.540000000037,
+    "change_pct": -2.079154000000004,
+    "days": 18,
     "max": 1016241.64,
-    "min": 988948.1
+    "min": 979208.46
   }
 };
 var modelInstructionsData = {
@@ -141,6 +145,9 @@ var modelInstructionsData = {
     ],
     "2026-03-09": [
       "中国10年国债ETF 200单位"
+    ],
+    "2026-03-10": [
+      "沪深300ETF 28000单位"
     ]
   }
 };
